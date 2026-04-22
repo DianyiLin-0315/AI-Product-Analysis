@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk'
-import { DimensionMeta } from './types'
+import { DimensionMeta, Source } from './types'
 
 const client = new Anthropic()
 
@@ -23,7 +23,7 @@ const DIMENSION_SCHEMA: Record<string, string> = {
 {"tiers": [{"name": "免费版", "price": "$0", "features": ["基础功能"]}, {"name": "Pro", "price": "$20/月"}]}`,
 }
 
-export function buildSystemPrompt(productName: string, activeDimension: DimensionMeta): string {
+export function buildSystemPrompt(productName: string, activeDimension: DimensionMeta, sources: Source[] = []): string {
   const schemaGuide = DIMENSION_SCHEMA[activeDimension.id] ?? ''
 
   return `你是一个产品分析助手，正在帮助分析产品「${productName}」的「${activeDimension.label}」维度。
@@ -40,19 +40,24 @@ export function buildSystemPrompt(productName: string, activeDimension: Dimensio
    }
    </dimension_data>
 ${schemaGuide ? `\n结构化数据格式要求（必须遵守，以便系统渲染图表）：\n${schemaGuide}\n` : ''}
-保持对话简洁、专业，每次只问一个问题。`
+保持对话简洁、专业，每次只问一个问题。${sources.length > 0 ? `
+
+以下是用户上传的参考资料，请在分析时优先从中提取相关信息：
+
+${sources.map((s, i) => `--- 资料${i + 1}：${s.title} ---\n${s.content.slice(0, 3000)}`).join('\n\n')}` : ''}`
 }
 
 export async function* streamChat(
   productName: string,
   activeDimension: DimensionMeta,
-  messages: Array<{ role: 'user' | 'assistant'; content: string }>
+  messages: Array<{ role: 'user' | 'assistant'; content: string }>,
+  sources: Source[] = []
 ): AsyncGenerator<string> {
   const stream = await client.messages.create({
     model: 'claude-sonnet-4-6',
     max_tokens: 2048,
     stream: true,
-    system: buildSystemPrompt(productName, activeDimension),
+    system: buildSystemPrompt(productName, activeDimension, sources),
     messages,
   })
 

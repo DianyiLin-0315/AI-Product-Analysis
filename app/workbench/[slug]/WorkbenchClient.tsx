@@ -1,21 +1,26 @@
 'use client'
 import { useState } from 'react'
-import { ProductMeta, DimensionData, Message, PendingData } from '@/lib/types'
+import { ProductMeta, DimensionData, Message, PendingData, Source } from '@/lib/types'
 import { DimensionList } from '@/components/workbench/DimensionList'
 import { ConversationPane } from '@/components/workbench/ConversationPane'
+import { SourcesPanel } from '@/components/workbench/SourcesPanel'
 import { ModulePreview } from '@/components/workbench/ModulePreview'
 
 export function WorkbenchClient({
   initialMeta,
   initialPreviewMap = {},
+  initialSources = [],
 }: {
   initialMeta: ProductMeta
   initialPreviewMap?: Record<string, DimensionData>
+  initialSources?: Source[]
 }) {
   const [meta, setMeta] = useState(initialMeta)
   const [activeDimensionId, setActiveDimensionId] = useState(
     meta.dimensions[0]?.id ?? ''
   )
+  const [showSources, setShowSources] = useState(false)
+  const [sources, setSources] = useState<Source[]>(initialSources)
 
   // Per-dimension conversation history
   const [messagesMap, setMessagesMap] = useState<Record<string, Message[]>>({})
@@ -39,6 +44,11 @@ export function WorkbenchClient({
 
   function handlePendingChange(data: PendingData | null) {
     setPendingMap(prev => ({ ...prev, [activeDimensionId]: data }))
+  }
+
+  function handleSelectDimension(id: string) {
+    setShowSources(false)
+    setActiveDimensionId(id)
   }
 
   async function handleDimensionComplete(
@@ -88,22 +98,32 @@ export function WorkbenchClient({
       }}>
         <DimensionList
           dimensions={meta.dimensions}
-          activeDimensionId={activeDimensionId}
-          onSelect={setActiveDimensionId}
+          activeDimensionId={showSources ? '' : activeDimensionId}
+          onSelect={handleSelectDimension}
           productName={meta.name}
           productLogo={meta.logo ?? '📦'}
           productCategory={meta.category}
+          sourcesCount={sources.length}
+          sourcesActive={showSources}
+          onSelectSources={() => setShowSources(true)}
         />
       </aside>
 
-      {/* Center: Conversation */}
+      {/* Center: Sources panel or Conversation */}
       <main style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}>
-        {activeDimension ? (
+        {showSources ? (
+          <SourcesPanel
+            slug={meta.slug}
+            sources={sources}
+            onSourcesChange={setSources}
+          />
+        ) : activeDimension ? (
           <ConversationPane
             productName={meta.name}
             activeDimension={activeDimension}
             messages={activeMessages}
             pendingData={activePending}
+            sources={sources}
             onMessagesChange={handleMessagesChange}
             onPendingChange={handlePendingChange}
             onDimensionComplete={handleDimensionComplete}
@@ -122,7 +142,6 @@ export function WorkbenchClient({
         display: 'flex',
         flexDirection: 'column',
       }}>
-        {/* Preview header */}
         <div style={{
           height: '47px',
           borderBottom: '1px solid var(--border)',
@@ -141,7 +160,6 @@ export function WorkbenchClient({
             Preview
           </span>
         </div>
-        {/* Preview body */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
           <ModulePreview data={activePreview} />
         </div>

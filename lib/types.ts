@@ -10,6 +10,16 @@ export interface PendingData {
   structuredData: Record<string, unknown>
 }
 
+export interface Source {
+  id: string
+  type: 'url' | 'file'
+  title: string
+  url?: string
+  filename?: string
+  content: string   // extracted plain text
+  added_at: string  // ISO timestamp
+}
+
 export interface DimensionMeta {
   id: string
   label: string        // Chinese display label

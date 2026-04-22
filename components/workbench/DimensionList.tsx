@@ -10,6 +10,9 @@ interface Props {
   productLogo: string
   productCategory: string
   onAddDimension?: () => void
+  sourcesCount?: number
+  sourcesActive?: boolean
+  onSelectSources?: () => void
 }
 
 const STATUS_DOT: Record<DimensionStatus, string> = {
@@ -26,6 +29,9 @@ export function DimensionList({
   productLogo,
   productCategory,
   onAddDimension,
+  sourcesCount = 0,
+  sourcesActive = false,
+  onSelectSources,
 }: Props) {
   const baseDimensions = dimensions.filter(d => !d.isExtended)
   const extendedDimensions = dimensions.filter(d => d.isExtended)
@@ -107,7 +113,55 @@ export function DimensionList({
           </div>
         </div>
 
-        {/* ④ DIMENSIONS section */}
+        {/* ④ SOURCES nav item */}
+        <SectionLabel>Sources</SectionLabel>
+        <button
+          onClick={onSelectSources}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            width: 'calc(100% - 16px)',
+            marginLeft: '8px',
+            height: '32px',
+            paddingLeft: '8px',
+            paddingRight: '8px',
+            borderRadius: '5px',
+            background: sourcesActive ? 'var(--active)' : 'transparent',
+            borderLeft: `2px solid ${sourcesActive ? 'var(--accent)' : 'transparent'}`,
+            textAlign: 'left',
+            transition: 'background 0.1s',
+            flexShrink: 0,
+          }}
+          onMouseEnter={e => { if (!sourcesActive) e.currentTarget.style.background = 'var(--active)' }}
+          onMouseLeave={e => { if (!sourcesActive) e.currentTarget.style.background = 'transparent' }}
+        >
+          <span style={{ fontSize: '13px', lineHeight: 1 }}>📎</span>
+          <span style={{
+            flex: 1,
+            fontSize: '13px',
+            color: sourcesActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+            fontWeight: sourcesActive ? '500' : '400',
+            lineHeight: 1,
+          }}>
+            All Sources
+          </span>
+          {sourcesCount > 0 && (
+            <span style={{
+              fontSize: '10px',
+              fontWeight: '500',
+              color: 'var(--accent)',
+              background: 'var(--accent-subtle)',
+              borderRadius: '10px',
+              padding: '1px 6px',
+              flexShrink: 0,
+            }}>
+              {sourcesCount}
+            </span>
+          )}
+        </button>
+
+        {/* ⑤ DIMENSIONS section */}
         <SectionLabel>Dimensions</SectionLabel>
 
         {baseDimensions.map(d => (

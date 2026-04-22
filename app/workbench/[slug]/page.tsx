@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { readProductMeta, readDimensionData } from '@/lib/products'
+import { readSources } from '@/lib/sources'
 import { WorkbenchClient } from './WorkbenchClient'
 import { DimensionData } from '@/lib/types'
 
@@ -28,5 +29,13 @@ export default async function WorkbenchProductPage({
       })
   )
 
-  return <WorkbenchClient initialMeta={meta} initialPreviewMap={initialPreviewMap} />
+  const initialSources = await readSources(slug)
+
+  return (
+    <WorkbenchClient
+      initialMeta={meta}
+      initialPreviewMap={initialPreviewMap}
+      initialSources={initialSources}
+    />
+  )
 }

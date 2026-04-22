@@ -1,12 +1,13 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
-import { DimensionMeta, Message, PendingData } from '@/lib/types'
+import { DimensionMeta, Message, PendingData, Source } from '@/lib/types'
 
 interface Props {
   productName: string
   activeDimension: DimensionMeta
   messages: Message[]
   pendingData: PendingData | null
+  sources?: Source[]
   onMessagesChange: (msgs: Message[]) => void
   onPendingChange: (data: PendingData | null) => void
   onDimensionComplete: (summary: string, structuredData: Record<string, unknown>) => void
@@ -17,6 +18,7 @@ export function ConversationPane({
   activeDimension,
   messages,
   pendingData,
+  sources = [],
   onMessagesChange,
   onPendingChange,
   onDimensionComplete,
@@ -64,7 +66,7 @@ export function ConversationPane({
     const res = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ productName, activeDimension, messages: apiMessages }),
+      body: JSON.stringify({ productName, activeDimension, messages: apiMessages, sources }),
     })
 
     const reader = res.body!.getReader()
