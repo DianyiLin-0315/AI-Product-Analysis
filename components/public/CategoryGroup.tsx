@@ -8,11 +8,18 @@ interface Props {
 
 export function CategoryGroup({ category, products }: Props) {
   return (
-    <section className="mb-8">
-      <h2 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+    <section style={{ marginBottom: '28px' }}>
+      <h2 style={{
+        fontSize: '10px',
+        fontWeight: '600',
+        color: 'var(--text-muted)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        marginBottom: '8px',
+      }}>
         {category}
       </h2>
-      <div className="flex flex-col gap-2">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
         {products.map(p => <ProductCard key={p.slug} product={p} />)}
       </div>
     </section>

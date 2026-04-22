@@ -1,6 +1,5 @@
 import { listProducts } from '@/lib/products'
 import { CategoryGroup } from '@/components/public/CategoryGroup'
-import Link from 'next/link'
 
 export const revalidate = 60
 
@@ -14,14 +13,45 @@ export default async function LibraryPage() {
   }, {})
 
   return (
-    <main className="max-w-2xl mx-auto px-4 py-12">
-      <h1 className="text-2xl font-bold text-white mb-8">AI 产品分析库</h1>
+    <main style={{ maxWidth: '640px', margin: '0 auto', padding: '48px 16px' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '32px' }}>
+        <div>
+          <h1 style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>
+            AI 产品分析库
+          </h1>
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+            {products.length > 0 ? `${products.length} 个产品` : '暂无产品'}
+          </p>
+        </div>
+        <a
+          href="/workbench"
+          style={{
+            fontSize: '12px',
+            padding: '5px 12px',
+            borderRadius: '5px',
+            background: 'var(--accent)',
+            color: '#fff',
+            fontWeight: '500',
+          }}
+        >
+          进入工作台
+        </a>
+      </div>
+
       {Object.keys(groups).length === 0 ? (
-        <p className="text-gray-400">
-          还没有分析过的产品。
-          <Link href="/workbench" className="text-blue-400 underline ml-1">前往工作台</Link>
-          开始第一个。
-        </p>
+        <div style={{
+          border: '1px dashed var(--border)',
+          borderRadius: '8px',
+          padding: '48px 24px',
+          textAlign: 'center',
+        }}>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+            还没有分析过的产品
+          </p>
+          <a href="/workbench" style={{ fontSize: '12px', color: 'var(--accent)' }}>
+            前往工作台开始第一个 →
+          </a>
+        </div>
       ) : (
         Object.entries(groups).map(([cat, prods]) => (
           <CategoryGroup key={cat} category={cat} products={prods} />

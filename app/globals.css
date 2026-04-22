@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0d0d0d;
+  --surface-1: #111111;
+  --surface-2: #161616;
+  --surface-3: #1e1e1e;
+  --border: #222222;
+  --border-subtle: #1a1a1a;
+  --text-primary: #ebebeb;
+  --text-secondary: #888888;
+  --text-muted: #555555;
+  --accent: #f97316;
+  --accent-hover: #fb923c;
+  --accent-subtle: rgba(249, 115, 22, 0.08);
+  --accent-subtle-border: rgba(249, 115, 22, 0.2);
+  --success: #4ade80;
+  --success-subtle: rgba(74, 222, 128, 0.08);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html, body {
+  height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'SF Pro Text', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+
+a { color: inherit; text-decoration: none; }
+button { border: none; background: none; padding: 0; cursor: pointer; font: inherit; color: inherit; }
+input, textarea { font: inherit; }

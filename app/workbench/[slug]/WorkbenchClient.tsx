@@ -31,11 +31,7 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
     await fetch('/api/dimension', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        slug: meta.slug,
-        dimensionId: activeDimensionId,
-        data,
-      }),
+      body: JSON.stringify({ slug: meta.slug, dimensionId: activeDimensionId, data }),
     })
 
     setMeta(prev => ({
@@ -49,8 +45,19 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
   }
 
   return (
-    <div className="flex h-[calc(100vh-57px)]">
-      <aside className="w-52 border-r border-gray-800 overflow-y-auto shrink-0">
+    <div style={{
+      display: 'flex',
+      height: 'calc(100vh - 40px)',
+      background: 'var(--bg)',
+    }}>
+      {/* Left: Dimension list */}
+      <aside style={{
+        width: '180px',
+        borderRight: '1px solid var(--border-subtle)',
+        overflowY: 'auto',
+        flexShrink: 0,
+        background: 'var(--surface-1)',
+      }}>
         <DimensionList
           dimensions={meta.dimensions}
           activeDimensionId={activeDimensionId}
@@ -58,7 +65,8 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
         />
       </aside>
 
-      <main className="flex-1 overflow-hidden">
+      {/* Center: Conversation */}
+      <main style={{ flex: 1, overflow: 'hidden', minWidth: 0 }}>
         {activeDimension ? (
           <ConversationPane
             productName={meta.name}
@@ -66,11 +74,19 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
             onDimensionComplete={handleDimensionComplete}
           />
         ) : (
-          <p className="p-4 text-gray-400 text-sm">暂无维度。</p>
+          <p style={{ padding: '16px', fontSize: '13px', color: 'var(--text-muted)' }}>暂无维度。</p>
         )}
       </main>
 
-      <aside className="w-72 border-l border-gray-800 overflow-y-auto p-4 shrink-0">
+      {/* Right: Preview */}
+      <aside style={{
+        width: '260px',
+        borderLeft: '1px solid var(--border-subtle)',
+        overflowY: 'auto',
+        padding: '12px',
+        flexShrink: 0,
+        background: 'var(--surface-1)',
+      }}>
         <ModulePreview data={lastCompletedData} />
       </aside>
     </div>

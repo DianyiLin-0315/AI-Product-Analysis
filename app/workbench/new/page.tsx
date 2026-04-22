@@ -30,42 +30,82 @@ export default function NewProductPage() {
     router.push(`/workbench/${slug}`)
   }
 
+  const labelStyle: React.CSSProperties = {
+    display: 'block',
+    fontSize: '11px',
+    color: 'var(--text-muted)',
+    marginBottom: '5px',
+    textTransform: 'uppercase',
+    letterSpacing: '0.06em',
+    fontWeight: '500',
+  }
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%',
+    background: 'var(--surface-2)',
+    border: '1px solid var(--border)',
+    borderRadius: '6px',
+    padding: '8px 10px',
+    fontSize: '13px',
+    color: 'var(--text-primary)',
+    outline: 'none',
+  }
+
   return (
-    <main className="max-w-md mx-auto px-4 py-12">
-      <h1 className="text-xl font-bold mb-6">新增产品</h1>
-      <form onSubmit={e => void handleSubmit(e)} className="space-y-4">
+    <main style={{ maxWidth: '440px', margin: '0 auto', padding: '48px 16px' }}>
+      <div style={{ marginBottom: '24px' }}>
+        <h1 style={{ fontSize: '15px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '4px' }}>
+          新增产品分析
+        </h1>
+        <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+          创建后可立即开始逐维度对话分析
+        </p>
+      </div>
+
+      <form onSubmit={e => void handleSubmit(e)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">产品名称</label>
+          <label style={labelStyle}>产品名称</label>
           <input
             required
             value={form.name}
             onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
-            className="w-full bg-gray-800 rounded-lg px-3 py-2 text-white outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="如：Notion、微信、Figma"
+            style={inputStyle}
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">产品类型</label>
+          <label style={labelStyle}>产品类型</label>
           <input
             required
             value={form.category}
             onChange={e => setForm(p => ({ ...p, category: e.target.value }))}
-            placeholder="如：社交平台、AI 工具、内容平台"
-            className="w-full bg-gray-800 rounded-lg px-3 py-2 text-white placeholder-gray-500 outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="如：AI 工具、社交平台、SaaS"
+            style={inputStyle}
           />
         </div>
         <div>
-          <label className="block text-sm text-gray-400 mb-1">图标（Emoji，可选）</label>
+          <label style={labelStyle}>图标（Emoji，可选）</label>
           <input
             value={form.logo}
             onChange={e => setForm(p => ({ ...p, logo: e.target.value }))}
             placeholder="📦"
-            className="w-full bg-gray-800 rounded-lg px-3 py-2 text-white placeholder-gray-500 outline-none focus:ring-1 focus:ring-blue-500"
+            style={inputStyle}
           />
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-2 rounded-lg bg-green-700 hover:bg-green-600 text-sm text-white disabled:opacity-40 transition-colors"
+          style={{
+            marginTop: '4px',
+            padding: '9px 0',
+            borderRadius: '6px',
+            background: loading ? 'var(--surface-3)' : 'var(--accent)',
+            color: loading ? 'var(--text-muted)' : '#fff',
+            fontSize: '13px',
+            fontWeight: '500',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            transition: 'background 0.15s',
+          }}
         >
           {loading ? '创建中…' : '开始分析'}
         </button>

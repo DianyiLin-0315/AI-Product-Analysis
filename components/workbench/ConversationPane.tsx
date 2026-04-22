@@ -23,7 +23,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  // Reset when dimension changes
   useEffect(() => {
     setMessages([])
     setInput('')
@@ -38,7 +37,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
     setInput('')
     setStreaming(true)
 
-    // URL detection — fetch page content server-side
     let finalInput = userMessage.content
     const urlMatch = finalInput.match(/https?:\/\/\S+/)
     if (urlMatch) {
@@ -50,13 +48,10 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
         })
         const { text } = await res.json() as { text: string }
         finalInput = finalInput.replace(urlMatch[0], `[网页内容]: ${text}`)
-      } catch { /* ignore URL fetch failure, proceed with original input */ }
+      } catch { /* ignore */ }
     }
 
-    const apiMessages = [
-      ...messages,
-      { role: 'user' as const, content: finalInput },
-    ]
+    const apiMessages = [...messages, { role: 'user' as const, content: finalInput }]
 
     const res = await fetch('/api/chat', {
       method: 'POST',
@@ -73,15 +68,17 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
       const { done, value } = await reader.read()
       if (done) break
       assistantText += decoder.decode(value)
+      const displayText = assistantText
+        .replace(/<dimension_data>[\s\S]*?<\/dimension_data>/g, '')
+        .trim()
       setMessages(prev => [
         ...prev.slice(0, -1),
-        { role: 'assistant', content: assistantText },
+        { role: 'assistant', content: displayText },
       ])
     }
 
     setStreaming(false)
 
-    // Detect dimension completion
     const match = assistantText.match(/<dimension_data>([\s\S]*?)<\/dimension_data>/)
     if (match) {
       try {
@@ -90,36 +87,85 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
           structured_data: Record<string, unknown>
         }
         onDimensionComplete(parsed.conversation_summary, parsed.structured_data)
-      } catch { /* malformed JSON from model — ignore */ }
+      } catch { /* ignore */ }
     }
   }
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {/* Header */}
+      <div style={{
+        padding: '10px 16px',
+        borderBottom: '1px solid var(--border-subtle)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        flexShrink: 0,
+      }}>
+        <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-primary)' }}>
+          {activeDimension.label}
+        </span>
+        <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>· {productName}</span>
+      </div>
+
+      {/* Messages */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0' }}>
         {messages.length === 0 && (
-          <p className="text-gray-500 text-sm">
-            正在分析「{activeDimension.label}」——发送消息开始。
-          </p>
+          <div style={{ padding: '24px 16px' }}>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+              开始分析「{activeDimension.label}」——发送消息或粘贴链接。
+            </p>
+          </div>
         )}
+
         {messages.map((m, i) => (
           <div
             key={i}
-            className={`text-sm rounded-lg p-3 max-w-[85%] whitespace-pre-wrap
-              ${m.role === 'user'
-                ? 'ml-auto bg-gray-800 text-white'
-                : 'bg-gray-900 text-gray-200'
-              }`}
+            style={{
+              padding: '12px 16px',
+              borderBottom: '1px solid var(--border-subtle)',
+              background: m.role === 'user' ? 'var(--surface-2)' : 'transparent',
+            }}
           >
-            {m.content}
+            <div style={{
+              fontSize: '11px',
+              fontWeight: '500',
+              color: m.role === 'user' ? 'var(--accent)' : 'var(--text-muted)',
+              marginBottom: '6px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+            }}>
+              {m.role === 'user' ? '你' : 'AI'}
+            </div>
+            <div style={{
+              fontSize: '13px',
+              color: 'var(--text-primary)',
+              lineHeight: '1.65',
+              whiteSpace: 'pre-wrap',
+            }}>
+              {m.content}
+            </div>
           </div>
         ))}
-        {streaming && (
-          <div className="text-xs text-gray-500 animate-pulse">AI 正在思考…</div>
+
+        {streaming && messages[messages.length - 1]?.role !== 'assistant' && (
+          <div style={{ padding: '12px 16px' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI</div>
+            <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>…</span>
+          </div>
         )}
+
         <div ref={bottomRef} />
       </div>
-      <div className="border-t border-gray-800 p-3 flex gap-2">
+
+      {/* Input */}
+      <div style={{
+        borderTop: '1px solid var(--border-subtle)',
+        padding: '10px 12px',
+        display: 'flex',
+        gap: '8px',
+        flexShrink: 0,
+      }}>
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
@@ -131,12 +177,32 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
           }}
           disabled={streaming}
           placeholder="输入信息或粘贴链接…"
-          className="flex-1 bg-gray-800 rounded-lg px-3 py-2 text-sm text-white placeholder-gray-500 outline-none disabled:opacity-50"
+          style={{
+            flex: 1,
+            background: 'var(--surface-3)',
+            border: '1px solid var(--border)',
+            borderRadius: '6px',
+            padding: '7px 10px',
+            fontSize: '13px',
+            color: 'var(--text-primary)',
+            outline: 'none',
+            opacity: streaming ? 0.5 : 1,
+          }}
         />
         <button
           onClick={() => void send()}
           disabled={streaming || !input.trim()}
-          className="px-4 py-2 rounded-lg bg-blue-700 hover:bg-blue-600 text-sm text-white disabled:opacity-40 transition-colors"
+          style={{
+            padding: '7px 14px',
+            borderRadius: '6px',
+            background: streaming || !input.trim() ? 'var(--surface-3)' : 'var(--accent)',
+            color: streaming || !input.trim() ? 'var(--text-muted)' : '#fff',
+            fontSize: '13px',
+            fontWeight: '500',
+            cursor: streaming || !input.trim() ? 'not-allowed' : 'pointer',
+            transition: 'background 0.15s',
+            flexShrink: 0,
+          }}
         >
           发送
         </button>

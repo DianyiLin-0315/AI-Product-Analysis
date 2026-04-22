@@ -2,26 +2,48 @@ import { ProductMeta } from '@/lib/types'
 
 export function ProductHero({ product }: { product: ProductMeta }) {
   return (
-    <div className="rounded-xl p-6 mb-8"
-      style={{ background: 'linear-gradient(135deg, rgba(240,136,62,0.1), rgba(210,168,255,0.1))' }}>
-      <div className="flex items-center gap-4">
-        <span className="text-4xl" aria-hidden="true">{product.logo ?? '📦'}</span>
-        <div className="flex-1">
-          <h1 className="text-2xl font-bold text-white">{product.name}</h1>
-          <p className="text-gray-400">{product.category}</p>
+    <div style={{
+      borderBottom: '1px solid var(--border)',
+      paddingBottom: '24px',
+      marginBottom: '24px',
+    }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+        <span style={{ fontSize: '36px', lineHeight: 1 }}>{product.logo ?? '📦'}</span>
+        <div style={{ flex: 1 }}>
+          <h1 style={{ fontSize: '20px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>
+            {product.name}
+          </h1>
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '12px' }}>
+            {product.category}
+          </p>
           {product.key_stats && Object.keys(product.key_stats).length > 0 && (
-            <div className="flex gap-4 mt-2 flex-wrap">
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               {Object.entries(product.key_stats).map(([k, v]) => (
-                <span key={k} className="text-sm text-gray-300">
-                  <span className="text-gray-500">{k}：</span>{v}
-                </span>
+                <div key={k} style={{
+                  background: 'var(--surface-2)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '5px',
+                  padding: '4px 10px',
+                }}>
+                  <span style={{ fontSize: '10px', color: 'var(--text-muted)', display: 'block' }}>{k}</span>
+                  <span style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-primary)' }}>{v}</span>
+                </div>
               ))}
             </div>
           )}
         </div>
-        <a href={`/compare?products=${product.slug}`}
-          className="text-sm px-4 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 whitespace-nowrap">
-          对比分析 →
+        <a
+          href={`/compare?products=${product.slug}`}
+          style={{
+            fontSize: '12px',
+            padding: '6px 12px',
+            borderRadius: '5px',
+            border: '1px solid var(--border)',
+            color: 'var(--text-secondary)',
+            flexShrink: 0,
+          }}
+        >
+          对比分析
         </a>
       </div>
     </div>

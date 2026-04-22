@@ -1,0 +1,46 @@
+{
+  "dimension_id": "user-segment",
+  "dimension_label": "用户群体",
+  "status": "complete",
+  "conversation_summary": "Notebook LM 核心用户为学生和职场人士，前者聚焦论文快速理解与对比，偏好免费版；后者聚焦文档整理与汇报生成，付费意愿较强",
+  "structured_data": {
+    "primary_user_groups": [
+      {
+        "group": "学生",
+        "priority": "核心用户",
+        "main_scenarios": [
+          "快速阅读理解论文",
+          "整理学习笔记",
+          "多论文内容对比分析"
+        ],
+        "core_pain_points": [
+          "阅读时间成本高",
+          "论文信息量大难以提炼",
+          "多文献对比耗费精力"
+        ],
+        "payment_willingness": "低，倾向免费版"
+      },
+      {
+        "group": "职场人士",
+        "priority": "核心用户",
+        "main_scenarios": [
+          "处理大量文档内容",
+          "快速生成可视化报告",
+          "整理汇报材料"
+        ],
+        "core_pain_points": [
+          "文档内容繁杂难以汇总",
+          "生成汇报报告耗时",
+          "信息提炼效率低"
+        ],
+        "payment_willingness": "高，愿意为效率付费"
+      }
+    ],
+    "secondary_user_groups": [],
+    "user_insights": {
+      "monetization_focus": "职场人士是主要付费群体，商业价值更高",
+      "growth_focus": "学生群体基数大，是重要的免费用户增长来源"
+    }
+  },
+  "last_updated": "2026-04-22T01:57:54.719Z"
+}

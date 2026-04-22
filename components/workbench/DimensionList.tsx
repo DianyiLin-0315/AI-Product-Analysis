@@ -7,41 +7,74 @@ interface Props {
   onSelect: (id: string) => void
 }
 
-const STATUS_COLOR: Record<DimensionStatus, string> = {
-  complete: 'text-green-400',
-  draft: 'text-orange-400',
-  pending: 'text-gray-500',
-}
-
-const STATUS_ICON: Record<DimensionStatus, string> = {
-  complete: '✓',
-  draft: '⟳',
-  pending: '○',
+const STATUS_DOT: Record<DimensionStatus, string> = {
+  complete: '#4ade80',
+  draft: '#f97316',
+  pending: '#333333',
 }
 
 export function DimensionList({ dimensions, activeDimensionId, onSelect }: Props) {
   return (
-    <div className="flex flex-col gap-1 p-3 h-full">
-      <p className="text-xs text-gray-500 uppercase tracking-wider mb-2">分析维度</p>
-      {dimensions.map(d => (
-        <button
-          key={d.id}
-          onClick={() => onSelect(d.id)}
-          className={`flex items-center gap-2 px-3 py-2 rounded text-sm text-left w-full transition-colors
-            ${d.id === activeDimensionId
-              ? 'bg-blue-900/40 border-l-2 border-blue-400 text-blue-300'
-              : 'text-gray-400 hover:bg-gray-800'
-            }`}
-        >
-          <span className={STATUS_COLOR[d.status]}>
-            {STATUS_ICON[d.status]}
-          </span>
-          <span className="truncate">{d.label}</span>
-          {d.isExtended && (
-            <span className="text-xs text-gray-600 ml-auto shrink-0">扩展</span>
-          )}
-        </button>
-      ))}
+    <div style={{ paddingTop: '8px', height: '100%' }}>
+      <p style={{
+        fontSize: '10px',
+        color: 'var(--text-muted)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.1em',
+        padding: '0 12px 6px',
+        fontWeight: '500',
+      }}>
+        分析维度
+      </p>
+
+      {dimensions.map(d => {
+        const isActive = d.id === activeDimensionId
+        return (
+          <button
+            key={d.id}
+            onClick={() => onSelect(d.id)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              width: '100%',
+              padding: '6px 12px',
+              fontSize: '13px',
+              textAlign: 'left',
+              background: isActive ? 'var(--accent-subtle)' : 'transparent',
+              color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
+              borderLeft: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
+              transition: 'color 0.1s, background 0.1s',
+            }}
+            onMouseEnter={e => {
+              if (!isActive) {
+                e.currentTarget.style.color = 'var(--text-primary)'
+                e.currentTarget.style.background = 'var(--surface-2)'
+              }
+            }}
+            onMouseLeave={e => {
+              if (!isActive) {
+                e.currentTarget.style.color = 'var(--text-secondary)'
+                e.currentTarget.style.background = 'transparent'
+              }
+            }}
+          >
+            <span style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              background: STATUS_DOT[d.status],
+              flexShrink: 0,
+            }} />
+            <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+              {d.label}
+            </span>
+            {d.isExtended && (
+              <span style={{ fontSize: '10px', color: 'var(--text-muted)', flexShrink: 0 }}>扩展</span>
+            )}
+          </button>
+        )
+      })}
     </div>
   )
 }

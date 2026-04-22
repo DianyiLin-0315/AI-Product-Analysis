@@ -12,23 +12,47 @@ export function ComparisonCard({ product, dimensions, visibleDimensionIds }: Pro
     : dimensions
 
   return (
-    <div className="flex-1 min-w-0 bg-gray-900 rounded-xl overflow-hidden">
-      <div className="p-4 border-b border-gray-800 flex items-center gap-3">
-        <span className="text-2xl" aria-hidden="true">{product.logo ?? '📦'}</span>
+    <div style={{
+      flex: 1,
+      minWidth: 0,
+      background: 'var(--surface-2)',
+      border: '1px solid var(--border)',
+      borderRadius: '8px',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        padding: '10px 14px',
+        borderBottom: '1px solid var(--border-subtle)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+      }}>
+        <span style={{ fontSize: '20px' }}>{product.logo ?? '📦'}</span>
         <div>
-          <p className="font-semibold text-white">{product.name}</p>
-          <p className="text-xs text-gray-400">{product.category}</p>
+          <p style={{ fontSize: '13px', fontWeight: '600', color: 'var(--text-primary)' }}>{product.name}</p>
+          <p style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{product.category}</p>
         </div>
       </div>
-      <div className="p-4 space-y-4">
+      <div style={{ padding: '12px 14px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {shown.map(d => (
           <div key={d.dimension_id}>
-            <p className="text-xs text-blue-400 font-medium mb-1">{d.dimension_label}</p>
-            <p className="text-sm text-gray-300">{d.conversation_summary}</p>
+            <p style={{
+              fontSize: '10px',
+              color: 'var(--accent)',
+              fontWeight: '600',
+              marginBottom: '4px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+            }}>
+              {d.dimension_label}
+            </p>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>
+              {d.conversation_summary}
+            </p>
           </div>
         ))}
         {shown.length === 0 && (
-          <p className="text-sm text-gray-500">暂无可对比的维度</p>
+          <p style={{ fontSize: '12px', color: 'var(--text-muted)' }}>暂无可对比的维度</p>
         )}
       </div>
     </div>

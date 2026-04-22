@@ -1,0 +1,55 @@
+{
+  "dimension_id": "pricing",
+  "dimension_label": "定价策略",
+  "status": "complete",
+  "conversation_summary": "NotebookLM 采用免费+$20/月的双层定价，通过免费层降低获客门槛，Plus版价格锚定ChatGPT；相比Notion AI（$10/月附加费）更激进地抢占独立研究工具市场。",
+  "structured_data": {
+    "pricing_tiers": [
+      {
+        "tier": "免费版",
+        "price": "$0",
+        "key_features": [
+          "100个笔记本",
+          "基础音频概览",
+          "标准响应速度"
+        ],
+        "target_user": "个人用户、学生、轻度使用者"
+      },
+      {
+        "tier": "NotebookLM Plus",
+        "price": "$20/月（或含于Google One AI Premium）",
+        "key_features": [
+          "500个笔记本",
+          "更多音频概览次数",
+          "更快响应速度",
+          "团队协作"
+        ],
+        "target_user": "重度研究用户、专业人士、团队"
+      }
+    ],
+    "competitor_comparison": [
+      {
+        "competitor": "Notion AI",
+        "price": "$10/月（附加费）",
+        "positioning": "AI增强的笔记/项目管理工具",
+        "pricing_model": "附加功能，依赖Notion原有用户基础",
+        "free_tier": false
+      },
+      {
+        "competitor": "NotebookLM",
+        "price": "$0 / $20/月",
+        "positioning": "AI驱动的研究/阅读理解工具",
+        "pricing_model": "独立产品，免费层+付费层",
+        "free_tier": true
+      }
+    ],
+    "pricing_strategy_insights": {
+      "anchor_price": "$20/月，对标ChatGPT Plus，建立市场认知",
+      "acquisition_strategy": "免费层大幅降低获客门槛，形成用户习惯后转化付费",
+      "differentiation_vs_notion": "NotebookLM定价更独立，不依赖生态绑定；Notion AI通过低价附加强化用户锁定",
+      "key_advantage": "免费版功能完整度高，对个人用户极具吸引力",
+      "key_risk": "免费版过于慷慨可能导致付费转化率偏低"
+    }
+  },
+  "last_updated": "2026-04-22T01:59:53.980Z"
+}

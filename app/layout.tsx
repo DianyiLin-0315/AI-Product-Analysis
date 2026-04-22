@@ -7,14 +7,10 @@ export const metadata: Metadata = {
   description: 'AI-driven product analysis workbench',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="zh">
+      <html lang="zh" style={{ colorScheme: 'dark' }}>
         <body>{children}</body>
       </html>
     </ClerkProvider>

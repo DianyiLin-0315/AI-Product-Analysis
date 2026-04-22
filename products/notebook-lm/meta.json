@@ -1,0 +1,52 @@
+{
+  "slug": "notebook-lm",
+  "name": "Notebook LM",
+  "category": "工具产品",
+  "logo": "📦",
+  "key_stats": {},
+  "created_at": "2026-04-22T01:47:32.927Z",
+  "dimensions": [
+    {
+      "id": "user-segment",
+      "label": "用户群体",
+      "isExtended": false,
+      "status": "complete"
+    },
+    {
+      "id": "pricing",
+      "label": "定价策略",
+      "isExtended": false,
+      "status": "complete"
+    },
+    {
+      "id": "features",
+      "label": "功能特性",
+      "isExtended": false,
+      "status": "pending"
+    },
+    {
+      "id": "pain-points",
+      "label": "场景痛点",
+      "isExtended": false,
+      "status": "pending"
+    },
+    {
+      "id": "user-needs",
+      "label": "需求洞察",
+      "isExtended": false,
+      "status": "pending"
+    },
+    {
+      "id": "competitors",
+      "label": "竞品分析",
+      "isExtended": false,
+      "status": "pending"
+    },
+    {
+      "id": "business-model",
+      "label": "商业模式",
+      "isExtended": false,
+      "status": "pending"
+    }
+  ]
+}
