@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { ProductMeta, DimensionData } from '@/lib/types'
+import { ProductMeta, DimensionData, Message, PendingData } from '@/lib/types'
 import { DimensionList } from '@/components/workbench/DimensionList'
 import { ConversationPane } from '@/components/workbench/ConversationPane'
 import { ModulePreview } from '@/components/workbench/ModulePreview'
@@ -10,10 +10,30 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
   const [activeDimensionId, setActiveDimensionId] = useState(
     meta.dimensions[0]?.id ?? ''
   )
-  const [lastCompletedData, setLastCompletedData] = useState<DimensionData | null>(null)
+
+  // Per-dimension conversation history
+  const [messagesMap, setMessagesMap] = useState<Record<string, Message[]>>({})
+
+  // Per-dimension pending confirm card state
+  const [pendingMap, setPendingMap] = useState<Record<string, PendingData | null>>({})
+
+  // Per-dimension preview data
+  const [previewMap, setPreviewMap] = useState<Record<string, DimensionData>>({})
 
   const activeDimension =
     meta.dimensions.find(d => d.id === activeDimensionId) ?? meta.dimensions[0]
+
+  const activeMessages = messagesMap[activeDimensionId] ?? []
+  const activePending = pendingMap[activeDimensionId] ?? null
+  const activePreview = previewMap[activeDimensionId] ?? null
+
+  function handleMessagesChange(msgs: Message[]) {
+    setMessagesMap(prev => ({ ...prev, [activeDimensionId]: msgs }))
+  }
+
+  function handlePendingChange(data: PendingData | null) {
+    setPendingMap(prev => ({ ...prev, [activeDimensionId]: data }))
+  }
 
   async function handleDimensionComplete(
     summary: string,
@@ -41,7 +61,7 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
       ),
     }))
 
-    setLastCompletedData(data)
+    setPreviewMap(prev => ({ ...prev, [activeDimensionId]: data }))
   }
 
   return (
@@ -76,6 +96,10 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
           <ConversationPane
             productName={meta.name}
             activeDimension={activeDimension}
+            messages={activeMessages}
+            pendingData={activePending}
+            onMessagesChange={handleMessagesChange}
+            onPendingChange={handlePendingChange}
             onDimensionComplete={handleDimensionComplete}
           />
         ) : (
@@ -113,7 +137,7 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
         </div>
         {/* Preview body */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
-          <ModulePreview data={lastCompletedData} />
+          <ModulePreview data={activePreview} />
         </div>
       </aside>
     </div>

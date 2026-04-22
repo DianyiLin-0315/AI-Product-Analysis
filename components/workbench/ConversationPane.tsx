@@ -1,28 +1,28 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
-import { DimensionMeta } from '@/lib/types'
-
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-}
-
-interface PendingData {
-  summary: string
-  structuredData: Record<string, unknown>
-}
+import { DimensionMeta, Message, PendingData } from '@/lib/types'
 
 interface Props {
   productName: string
   activeDimension: DimensionMeta
+  messages: Message[]
+  pendingData: PendingData | null
+  onMessagesChange: (msgs: Message[]) => void
+  onPendingChange: (data: PendingData | null) => void
   onDimensionComplete: (summary: string, structuredData: Record<string, unknown>) => void
 }
 
-export function ConversationPane({ productName, activeDimension, onDimensionComplete }: Props) {
-  const [messages, setMessages] = useState<Message[]>([])
+export function ConversationPane({
+  productName,
+  activeDimension,
+  messages,
+  pendingData,
+  onMessagesChange,
+  onPendingChange,
+  onDimensionComplete,
+}: Props) {
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
-  const [pendingData, setPendingData] = useState<PendingData | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -30,10 +30,10 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, pendingData])
 
+  // Reset input and streaming state when switching dimensions
   useEffect(() => {
-    setMessages([])
     setInput('')
-    setPendingData(null)
+    setStreaming(false)
   }, [activeDimension.id])
 
   async function send() {
@@ -41,7 +41,7 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
 
     const userMessage: Message = { role: 'user', content: input.trim() }
     const nextMessages = [...messages, userMessage]
-    setMessages(nextMessages)
+    onMessagesChange(nextMessages)
     setInput('')
     setStreaming(true)
 
@@ -70,7 +70,7 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
     const reader = res.body!.getReader()
     const decoder = new TextDecoder()
     let assistantText = ''
-    setMessages(prev => [...prev, { role: 'assistant', content: '' }])
+    onMessagesChange([...nextMessages, { role: 'assistant', content: '' }])
 
     while (true) {
       const { done, value } = await reader.read()
@@ -79,8 +79,8 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
       const displayText = assistantText
         .replace(/<dimension_data>[\s\S]*?<\/dimension_data>/g, '')
         .trim()
-      setMessages(prev => [
-        ...prev.slice(0, -1),
+      onMessagesChange([
+        ...nextMessages,
         { role: 'assistant', content: displayText },
       ])
     }
@@ -94,7 +94,7 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
           conversation_summary: string
           structured_data: Record<string, unknown>
         }
-        setPendingData({
+        onPendingChange({
           summary: parsed.conversation_summary,
           structuredData: parsed.structured_data,
         })
@@ -105,7 +105,7 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
   function handleConfirm() {
     if (!pendingData) return
     onDimensionComplete(pendingData.summary, pendingData.structuredData)
-    setPendingData(null)
+    onPendingChange(null)
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -138,7 +138,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
         }}>
           {activeDimension.label}
         </span>
-        {/* Active tab underline */}
         <div style={{
           position: 'absolute',
           bottom: 0,
@@ -173,7 +172,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
         {/* Message list */}
         {messages.map((m, i) => (
           <div key={i} style={{ padding: '16px 20px 0' }}>
-            {/* Role label */}
             <p style={{
               fontSize: '11px',
               fontWeight: '500',
@@ -183,7 +181,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
             }}>
               {m.role === 'user' ? 'You' : 'Lloyd AI'}
             </p>
-            {/* Message content */}
             <p style={{
               fontSize: '13px',
               color: m.role === 'user' ? 'var(--text-primary)' : 'var(--text-secondary)',
@@ -192,7 +189,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
               wordBreak: 'break-word',
             }}>
               {m.content}
-              {/* Streaming cursor */}
               {streaming && i === messages.length - 1 && m.role === 'assistant' && (
                 <span style={{
                   display: 'inline-block',
@@ -201,7 +197,6 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
                   background: 'var(--accent)',
                   marginLeft: '2px',
                   verticalAlign: 'middle',
-                  animation: 'none',
                   opacity: 0.8,
                 }} />
               )}
@@ -223,13 +218,8 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
             gap: '12px',
           }}>
             <div>
-              <p style={{
-                fontSize: '13px',
-                fontWeight: '500',
-                color: 'var(--accent)',
-                marginBottom: '4px',
-              }}>
-                ✓&nbsp;&nbsp;已收集到足够
+              <p style={{ fontSize: '13px', fontWeight: '500', color: 'var(--accent)', marginBottom: '4px' }}>
+                ✓&nbsp;&nbsp;已收集到足够信息
               </p>
               <p style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
                 {activeDimension.label}维度数据已整理，确认写入模块？
@@ -259,10 +249,7 @@ export function ConversationPane({ productName, activeDimension, onDimensionComp
       </div>
 
       {/* Input area */}
-      <div style={{
-        padding: '0 20px 20px',
-        flexShrink: 0,
-      }}>
+      <div style={{ padding: '0 20px 20px', flexShrink: 0 }}>
         <div style={{
           position: 'relative',
           background: 'var(--surface-2)',

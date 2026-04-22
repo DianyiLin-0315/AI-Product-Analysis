@@ -1,5 +1,15 @@
 export type DimensionStatus = 'pending' | 'draft' | 'complete'
 
+export interface Message {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+export interface PendingData {
+  summary: string
+  structuredData: Record<string, unknown>
+}
+
 export interface DimensionMeta {
   id: string
   label: string        // Chinese display label
