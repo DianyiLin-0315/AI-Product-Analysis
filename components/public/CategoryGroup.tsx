@@ -19,7 +19,11 @@ export function CategoryGroup({ category, products }: Props) {
       }}>
         {category}
       </h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+        gap: '10px',
+      }}>
         {products.map(p => <ProductCard key={p.slug} product={p} />)}
       </div>
     </section>

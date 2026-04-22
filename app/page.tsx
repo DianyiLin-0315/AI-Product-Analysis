@@ -13,7 +13,7 @@ export default async function LibraryPage() {
   }, {})
 
   return (
-    <main style={{ maxWidth: '640px', margin: '0 auto', padding: '48px 16px' }}>
+    <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 24px' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '32px' }}>
         <div>
           <h1 style={{ fontSize: '16px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>
