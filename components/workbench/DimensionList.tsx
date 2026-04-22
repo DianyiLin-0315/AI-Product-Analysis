@@ -1,5 +1,5 @@
 'use client'
-import { DimensionMeta } from '@/lib/types'
+import { DimensionMeta, DimensionStatus } from '@/lib/types'
 
 interface Props {
   dimensions: DimensionMeta[]
@@ -7,13 +7,13 @@ interface Props {
   onSelect: (id: string) => void
 }
 
-const STATUS_COLOR: Record<string, string> = {
+const STATUS_COLOR: Record<DimensionStatus, string> = {
   complete: 'text-green-400',
   draft: 'text-orange-400',
   pending: 'text-gray-500',
 }
 
-const STATUS_ICON: Record<string, string> = {
+const STATUS_ICON: Record<DimensionStatus, string> = {
   complete: '✓',
   draft: '⟳',
   pending: '○',
@@ -33,8 +33,8 @@ export function DimensionList({ dimensions, activeDimensionId, onSelect }: Props
               : 'text-gray-400 hover:bg-gray-800'
             }`}
         >
-          <span className={STATUS_COLOR[d.status] ?? 'text-gray-500'}>
-            {STATUS_ICON[d.status] ?? '○'}
+          <span className={STATUS_COLOR[d.status]}>
+            {STATUS_ICON[d.status]}
           </span>
           <span className="truncate">{d.label}</span>
           {d.isExtended && (
