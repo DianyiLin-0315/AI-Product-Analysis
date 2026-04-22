@@ -5,7 +5,13 @@ import { DimensionList } from '@/components/workbench/DimensionList'
 import { ConversationPane } from '@/components/workbench/ConversationPane'
 import { ModulePreview } from '@/components/workbench/ModulePreview'
 
-export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
+export function WorkbenchClient({
+  initialMeta,
+  initialPreviewMap = {},
+}: {
+  initialMeta: ProductMeta
+  initialPreviewMap?: Record<string, DimensionData>
+}) {
   const [meta, setMeta] = useState(initialMeta)
   const [activeDimensionId, setActiveDimensionId] = useState(
     meta.dimensions[0]?.id ?? ''
@@ -17,8 +23,8 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
   // Per-dimension pending confirm card state
   const [pendingMap, setPendingMap] = useState<Record<string, PendingData | null>>({})
 
-  // Per-dimension preview data
-  const [previewMap, setPreviewMap] = useState<Record<string, DimensionData>>({})
+  // Per-dimension preview data — seeded from server on mount
+  const [previewMap, setPreviewMap] = useState<Record<string, DimensionData>>(initialPreviewMap)
 
   const activeDimension =
     meta.dimensions.find(d => d.id === activeDimensionId) ?? meta.dimensions[0]

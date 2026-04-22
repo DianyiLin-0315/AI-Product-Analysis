@@ -5,6 +5,7 @@ import { RadarModule }   from './charts/RadarModule'
 import { RankModule }    from './charts/RankModule'
 import { PricingModule } from './charts/PricingModule'
 import { GenericModule } from './charts/GenericModule'
+import { extractScores } from './charts/utils'
 
 interface Props { data: DimensionData | null }
 
@@ -101,10 +102,12 @@ function ChartRouter({
       return <SegmentModule data={structuredData} />
 
     case 'features':
-      return <RadarModule data={structuredData} />
-
-    case 'competitors':
-      return <RadarModule data={structuredData} />
+    case 'competitors': {
+      const scores = extractScores(structuredData)
+      if (scores && scores.length >= 3) return <RadarModule data={structuredData} />
+      // AI returned text importance instead of numeric scores — fall back to ranked list
+      return <RankModule data={structuredData} />
+    }
 
     case 'pain-points':
     case 'user-needs':
