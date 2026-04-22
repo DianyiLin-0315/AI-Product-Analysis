@@ -1,21 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0d0d0d;
-  --surface-1: #111111;
-  --surface-2: #161616;
-  --surface-3: #1e1e1e;
-  --border: #222222;
-  --border-subtle: #1a1a1a;
-  --text-primary: #ebebeb;
-  --text-secondary: #888888;
-  --text-muted: #555555;
-  --accent: #f97316;
-  --accent-hover: #fb923c;
-  --accent-subtle: rgba(249, 115, 22, 0.08);
-  --accent-subtle-border: rgba(249, 115, 22, 0.2);
-  --success: #4ade80;
-  --success-subtle: rgba(74, 222, 128, 0.08);
+  /* Page backgrounds */
+  --bg: #F7F7F8;
+  --sidebar: #F2F2F4;
+  --active: #E8E8EE;
+
+  /* Surface layers */
+  --surface-1: #FFFFFF;
+  --surface-2: #F7F7F8;
+  --surface-3: #F2F2F4;
+
+  /* Borders */
+  --border: #E4E4E8;
+  --border-subtle: rgba(228, 228, 232, 0.6);
+
+  /* Text layers */
+  --text-primary: #1C1C28;
+  --text-secondary: #6B6B7B;
+  --text-muted: #ADADBC;
+
+  /* Accent — Linear purple */
+  --accent: #5E5CE6;
+  --accent-hover: #4A48D6;
+  --accent-subtle: #EEEEF8;
+  --accent-subtle-border: rgba(94, 92, 230, 0.2);
+
+  /* Semantic */
+  --success: #28A745;
+  --success-subtle: rgba(40, 167, 69, 0.08);
+  --error: #DC3545;
+  --error-subtle: rgba(220, 53, 69, 0.08);
 }
 
 *, *::before, *::after {
@@ -41,8 +56,8 @@ body {
   height: 4px;
 }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3a3a; }
+::-webkit-scrollbar-thumb { background: #D0D0D8; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #ADADBC; }
 
 a { color: inherit; text-decoration: none; }
 button { border: none; background: none; padding: 0; cursor: pointer; font: inherit; color: inherit; }
