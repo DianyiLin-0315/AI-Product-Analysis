@@ -30,11 +30,11 @@ export default async function ProductDetailPage({
   ).filter((d): d is DimensionData => d !== null)
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-12">
+    <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '48px 24px' }}>
       <ProductHero product={meta} />
       {dimensionData.map(d => <DimensionModule key={d.dimension_id} data={d} />)}
       {dimensionData.length === 0 && (
-        <p className="text-gray-400">该产品还没有完成任何维度的分析。</p>
+        <p style={{ fontSize: '13px', color: '#ADADBC' }}>该产品还没有完成任何维度的分析。</p>
       )}
     </main>
   )

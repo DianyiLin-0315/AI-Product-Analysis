@@ -1,112 +1,79 @@
+'use client'
 import { DimensionData } from '@/lib/types'
+import { SegmentModule } from '@/components/workbench/charts/SegmentModule'
+import { RadarModule }   from '@/components/workbench/charts/RadarModule'
+import { RankModule }    from '@/components/workbench/charts/RankModule'
+import { PricingModule } from '@/components/workbench/charts/PricingModule'
+import { GenericModule } from '@/components/workbench/charts/GenericModule'
 
-function renderValue(v: unknown): React.ReactNode {
-  if (Array.isArray(v)) {
-    if (v.length === 0) return <span style={{ color: 'var(--text-muted)' }}>—</span>
-    if (typeof v[0] === 'object' && v[0] !== null) {
-      return (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px' }}>
-          {v.map((item, i) => (
-            <div key={i} style={{
-              background: 'var(--surface-3)',
-              borderRadius: '5px',
-              padding: '8px 10px',
-            }}>
-              {Object.entries(item as Record<string, unknown>).map(([ik, iv]) => (
-                <div key={ik} style={{ fontSize: '12px', lineHeight: '1.6' }}>
-                  <span style={{ color: 'var(--text-muted)' }}>{ik}：</span>
-                  <span style={{ color: 'var(--text-secondary)' }}>
-                    {Array.isArray(iv) ? (iv as unknown[]).map(String).join('、') : String(iv)}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )
-    }
-    return <span>{(v as unknown[]).map(String).join('、')}</span>
+function ChartRouter({
+  dimensionId,
+  structuredData,
+}: {
+  dimensionId: string
+  structuredData: Record<string, unknown>
+}) {
+  switch (dimensionId) {
+    case 'user-segment':
+      return <SegmentModule data={structuredData} />
+    case 'features':
+    case 'competitors':
+      return <RadarModule data={structuredData} />
+    case 'pain-points':
+    case 'user-needs':
+      return <RankModule data={structuredData} />
+    case 'pricing':
+      return <PricingModule data={structuredData} />
+    default:
+      return <GenericModule data={structuredData} />
   }
-  if (typeof v === 'object' && v !== null) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', marginTop: '4px' }}>
-        {Object.entries(v as Record<string, unknown>).map(([ik, iv]) => (
-          <div key={ik} style={{ fontSize: '12px', lineHeight: '1.5' }}>
-            <span style={{ color: 'var(--text-muted)' }}>{ik}：</span>
-            <span style={{ color: 'var(--text-secondary)' }}>
-              {Array.isArray(iv) ? (iv as unknown[]).map(String).join('、') : String(iv)}
-            </span>
-          </div>
-        ))}
-      </div>
-    )
-  }
-  return <span>{String(v)}</span>
 }
 
 export function DimensionModule({ data }: { data: DimensionData }) {
   return (
     <div style={{
-      background: 'var(--surface-2)',
-      border: '1px solid var(--border)',
-      borderRadius: '8px',
+      background: '#FFFFFF',
+      border: '1px solid #E4E4E8',
+      borderRadius: '10px',
       overflow: 'hidden',
       marginBottom: '12px',
     }}>
-      {/* Card header */}
+      {/* Header */}
       <div style={{
-        padding: '10px 14px',
-        borderBottom: '1px solid var(--border-subtle)',
+        padding: '10px 16px',
+        borderBottom: '1px solid #E4E4E8',
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
       }}>
         <span style={{
-          width: '8px',
-          height: '8px',
-          borderRadius: '50%',
-          background: 'var(--accent)',
+          width: '6px',
+          height: '6px',
+          borderRadius: '1px',
+          background: '#5E5CE6',
           flexShrink: 0,
         }} />
-        <h3 style={{ fontSize: '12px', fontWeight: '600', color: 'var(--accent)' }}>
+        <h3 style={{ fontSize: '13px', fontWeight: '600', color: '#1C1C28' }}>
           {data.dimension_label}
         </h3>
       </div>
 
-      {/* Card body */}
-      <div style={{ padding: '12px 14px' }}>
-        <p style={{
-          fontSize: '13px',
-          color: 'var(--text-secondary)',
-          lineHeight: '1.65',
-          marginBottom: '12px',
-        }}>
-          {data.conversation_summary}
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
-          {Object.entries(data.structured_data).map(([k, v]) => (
-            <div key={k} style={{
-              background: 'var(--surface-3)',
-              borderRadius: '5px',
-              padding: '8px 10px',
-            }}>
-              <p style={{
-                fontSize: '10px',
-                color: 'var(--accent)',
-                fontWeight: '600',
-                marginBottom: '4px',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-              }}>
-                {k}
-              </p>
-              <div style={{ fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
-                {renderValue(v)}
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* Body */}
+      <div style={{ padding: '16px' }}>
+        {data.conversation_summary && (
+          <p style={{
+            fontSize: '13px',
+            color: '#6B6B7B',
+            lineHeight: '1.7',
+            marginBottom: '16px',
+          }}>
+            {data.conversation_summary}
+          </p>
+        )}
+        <ChartRouter
+          dimensionId={data.dimension_id}
+          structuredData={data.structured_data}
+        />
       </div>
     </div>
   )
