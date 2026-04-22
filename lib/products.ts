@@ -6,6 +6,12 @@ const PRODUCTS_DIR = path.join(process.cwd(), 'products')
 
 function resolveProductsDir(dir = PRODUCTS_DIR) { return dir }
 
+function validatePathSegment(segment: string, name: string): void {
+  if (!/^[a-z0-9-]+$/.test(segment)) {
+    throw new Error(`Invalid ${name}: "${segment}" — must match /^[a-z0-9-]+$/`)
+  }
+}
+
 export async function listProducts(dir?: string): Promise<ProductMeta[]> {
   const base = resolveProductsDir(dir)
   let entries: string[]
@@ -23,6 +29,7 @@ export async function listProducts(dir?: string): Promise<ProductMeta[]> {
 }
 
 export async function readProductMeta(slug: string, dir?: string): Promise<ProductMeta> {
+  validatePathSegment(slug, 'slug')
   const base = resolveProductsDir(dir)
   const file = path.join(base, slug, 'meta.json')
   const raw = await fs.readFile(file, 'utf-8')
@@ -30,6 +37,7 @@ export async function readProductMeta(slug: string, dir?: string): Promise<Produ
 }
 
 export async function writeProductMeta(meta: ProductMeta, dir?: string): Promise<void> {
+  validatePathSegment(meta.slug, 'slug')
   const base = resolveProductsDir(dir)
   const folder = path.join(base, meta.slug)
   await fs.mkdir(folder, { recursive: true })
@@ -37,6 +45,8 @@ export async function writeProductMeta(meta: ProductMeta, dir?: string): Promise
 }
 
 export async function readDimensionData(slug: string, dimensionId: string, dir?: string): Promise<DimensionData> {
+  validatePathSegment(slug, 'slug')
+  validatePathSegment(dimensionId, 'dimensionId')
   const base = resolveProductsDir(dir)
   const file = path.join(base, slug, `${dimensionId}.json`)
   const raw = await fs.readFile(file, 'utf-8')
@@ -44,6 +54,8 @@ export async function readDimensionData(slug: string, dimensionId: string, dir?:
 }
 
 export async function writeDimensionData(slug: string, dimensionId: string, data: DimensionData, dir?: string): Promise<void> {
+  validatePathSegment(slug, 'slug')
+  validatePathSegment(dimensionId, 'dimensionId')
   const base = resolveProductsDir(dir)
   const folder = path.join(base, slug)
   await fs.mkdir(folder, { recursive: true })
