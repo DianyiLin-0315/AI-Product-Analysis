@@ -87,12 +87,34 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
       <aside style={{
         width: '328px',
         borderLeft: '1px solid var(--border)',
-        overflowY: 'auto',
-        padding: '12px 16px',
         flexShrink: 0,
         background: 'var(--surface-2)',
+        display: 'flex',
+        flexDirection: 'column',
       }}>
-        <ModulePreview data={lastCompletedData} />
+        {/* Preview header */}
+        <div style={{
+          height: '47px',
+          borderBottom: '1px solid var(--border)',
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+          flexShrink: 0,
+        }}>
+          <span style={{
+            fontSize: '10px',
+            fontWeight: '500',
+            color: 'var(--text-muted)',
+            letterSpacing: '0.8px',
+            textTransform: 'uppercase',
+          }}>
+            Preview
+          </span>
+        </div>
+        {/* Preview body */}
+        <div style={{ flex: 1, overflowY: 'auto', padding: '12px 16px' }}>
+          <ModulePreview data={lastCompletedData} />
+        </div>
       </aside>
     </div>
   )
