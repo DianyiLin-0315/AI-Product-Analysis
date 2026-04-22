@@ -1,5 +1,6 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
+import { TopNav } from '@/components/TopNav'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -10,8 +11,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
-      <html lang="zh" style={{ colorScheme: 'dark' }}>
-        <body>{children}</body>
+      <html lang="zh">
+        <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <TopNav />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   )
