@@ -1,80 +1,242 @@
 'use client'
+import Link from 'next/link'
 import { DimensionMeta, DimensionStatus } from '@/lib/types'
 
 interface Props {
   dimensions: DimensionMeta[]
   activeDimensionId: string
   onSelect: (id: string) => void
+  productName: string
+  productLogo: string
+  productCategory: string
+  onAddDimension?: () => void
 }
 
 const STATUS_DOT: Record<DimensionStatus, string> = {
-  complete: '#4ade80',
-  draft: '#f97316',
-  pending: '#333333',
+  complete: '#28A745',
+  draft:    '#5E5CE6',
+  pending:  '#ADADBC',
 }
 
-export function DimensionList({ dimensions, activeDimensionId, onSelect }: Props) {
-  return (
-    <div style={{ paddingTop: '8px', height: '100%' }}>
-      <p style={{
-        fontSize: '10px',
-        color: 'var(--text-muted)',
-        textTransform: 'uppercase',
-        letterSpacing: '0.1em',
-        padding: '0 12px 6px',
-        fontWeight: '500',
-      }}>
-        分析维度
-      </p>
+export function DimensionList({
+  dimensions,
+  activeDimensionId,
+  onSelect,
+  productName,
+  productLogo,
+  productCategory,
+  onAddDimension,
+}: Props) {
+  const baseDimensions = dimensions.filter(d => !d.isExtended)
+  const extendedDimensions = dimensions.filter(d => d.isExtended)
 
-      {dimensions.map(d => {
-        const isActive = d.id === activeDimensionId
-        return (
-          <button
-            key={d.id}
-            onClick={() => onSelect(d.id)}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              width: '100%',
-              padding: '6px 12px',
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+
+      {/* ① App Header */}
+      <div style={{
+        padding: '15px 16px',
+        borderBottom: '1px solid var(--border)',
+        flexShrink: 0,
+      }}>
+        <span style={{
+          fontSize: '13px',
+          fontWeight: '600',
+          color: 'var(--text-primary)',
+          letterSpacing: '-0.01em',
+        }}>
+          ◈&nbsp;&nbsp;Product Analysis
+        </span>
+      </div>
+
+      {/* Scrollable body */}
+      <div style={{ flex: 1, overflowY: 'auto', paddingBottom: '16px' }}>
+
+        {/* ② Back link */}
+        <Link
+          href="/"
+          style={{
+            display: 'block',
+            fontSize: '12px',
+            color: 'var(--text-secondary)',
+            padding: '12px 16px 0',
+            lineHeight: '1',
+          }}
+        >
+          ← Back to Products
+        </Link>
+
+        {/* ③ Product identity card */}
+        <div style={{
+          margin: '10px 16px 0',
+          background: 'var(--active)',
+          borderRadius: '6px',
+          height: '52px',
+          padding: '0 10px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+          overflow: 'hidden',
+          flexShrink: 0,
+        }}>
+          <span style={{ fontSize: '20px', lineHeight: 1, flexShrink: 0 }}>
+            {productLogo}
+          </span>
+          <div style={{ minWidth: 0 }}>
+            <p style={{
               fontSize: '13px',
-              textAlign: 'left',
-              background: isActive ? 'var(--accent-subtle)' : 'transparent',
-              color: isActive ? 'var(--accent)' : 'var(--text-secondary)',
-              borderLeft: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
-              transition: 'color 0.1s, background 0.1s',
-            }}
-            onMouseEnter={e => {
-              if (!isActive) {
-                e.currentTarget.style.color = 'var(--text-primary)'
-                e.currentTarget.style.background = 'var(--surface-2)'
-              }
-            }}
-            onMouseLeave={e => {
-              if (!isActive) {
-                e.currentTarget.style.color = 'var(--text-secondary)'
-                e.currentTarget.style.background = 'transparent'
-              }
-            }}
-          >
-            <span style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: STATUS_DOT[d.status],
-              flexShrink: 0,
-            }} />
-            <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {d.label}
-            </span>
-            {d.isExtended && (
-              <span style={{ fontSize: '10px', color: 'var(--text-muted)', flexShrink: 0 }}>扩展</span>
-            )}
-          </button>
-        )
-      })}
+              fontWeight: '600',
+              color: 'var(--text-primary)',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              lineHeight: 1.4,
+            }}>
+              {productName}
+            </p>
+            <p style={{
+              fontSize: '11px',
+              color: 'var(--text-muted)',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              lineHeight: 1.4,
+            }}>
+              {productCategory}
+            </p>
+          </div>
+        </div>
+
+        {/* ④ DIMENSIONS section */}
+        <SectionLabel>Dimensions</SectionLabel>
+
+        {baseDimensions.map(d => (
+          <DimensionRow
+            key={d.id}
+            dimension={d}
+            isActive={d.id === activeDimensionId}
+            onSelect={onSelect}
+          />
+        ))}
+
+        {/* EXTENDED section */}
+        {extendedDimensions.length > 0 && (
+          <>
+            <SectionLabel>Extended</SectionLabel>
+            {extendedDimensions.map(d => (
+              <DimensionRow
+                key={d.id}
+                dimension={d}
+                isActive={d.id === activeDimensionId}
+                onSelect={onSelect}
+              />
+            ))}
+          </>
+        )}
+
+        {/* + Add Dimension */}
+        <button
+          onClick={onAddDimension}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '12px 16px 0',
+            height: '28px',
+            width: 'calc(100% - 32px)',
+            border: '1px solid var(--border)',
+            borderRadius: '5px',
+            fontSize: '12px',
+            color: 'var(--text-muted)',
+            background: 'transparent',
+            cursor: 'pointer',
+            transition: 'border-color 0.1s, color 0.1s',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.borderColor = 'var(--text-muted)'
+            e.currentTarget.style.color = 'var(--text-secondary)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.borderColor = 'var(--border)'
+            e.currentTarget.style.color = 'var(--text-muted)'
+          }}
+        >
+          + Add Dimension
+        </button>
+      </div>
     </div>
+  )
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p style={{
+      fontSize: '10px',
+      fontWeight: '500',
+      color: 'var(--text-muted)',
+      textTransform: 'uppercase',
+      letterSpacing: '0.08em',
+      padding: '14px 16px 4px',
+    }}>
+      {children}
+    </p>
+  )
+}
+
+function DimensionRow({
+  dimension,
+  isActive,
+  onSelect,
+}: {
+  dimension: DimensionMeta
+  isActive: boolean
+  onSelect: (id: string) => void
+}) {
+  return (
+    <button
+      onClick={() => onSelect(dimension.id)}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        width: 'calc(100% - 16px)',
+        marginLeft: '8px',
+        height: '32px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
+        borderRadius: '5px',
+        background: isActive ? 'var(--active)' : 'transparent',
+        borderLeft: `2px solid ${isActive ? 'var(--accent)' : 'transparent'}`,
+        textAlign: 'left',
+        transition: 'background 0.1s',
+        flexShrink: 0,
+      }}
+      onMouseEnter={e => {
+        if (!isActive) e.currentTarget.style.background = 'var(--active)'
+      }}
+      onMouseLeave={e => {
+        if (!isActive) e.currentTarget.style.background = 'transparent'
+      }}
+    >
+      <span style={{
+        width: '7px',
+        height: '7px',
+        borderRadius: '50%',
+        background: STATUS_DOT[dimension.status],
+        flexShrink: 0,
+      }} />
+      <span style={{
+        flex: 1,
+        fontSize: '13px',
+        color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+        fontWeight: isActive ? '500' : '400',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        lineHeight: 1,
+      }}>
+        {dimension.label}
+      </span>
+    </button>
   )
 }

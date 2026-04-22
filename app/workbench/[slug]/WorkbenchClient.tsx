@@ -47,21 +47,26 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
   return (
     <div style={{
       display: 'flex',
-      height: 'calc(100vh - 40px)',
-      background: 'var(--bg)',
+      height: '100vh',
+      background: 'var(--surface-1)',
     }}>
       {/* Left: Dimension list */}
       <aside style={{
-        width: '180px',
-        borderRight: '1px solid var(--border-subtle)',
-        overflowY: 'auto',
+        width: '252px',
+        borderRight: '1px solid var(--border)',
+        overflowY: 'hidden',
         flexShrink: 0,
-        background: 'var(--surface-1)',
+        background: 'var(--sidebar)',
+        display: 'flex',
+        flexDirection: 'column',
       }}>
         <DimensionList
           dimensions={meta.dimensions}
           activeDimensionId={activeDimensionId}
           onSelect={setActiveDimensionId}
+          productName={meta.name}
+          productLogo={meta.logo ?? '📦'}
+          productCategory={meta.category}
         />
       </aside>
 
@@ -80,12 +85,12 @@ export function WorkbenchClient({ initialMeta }: { initialMeta: ProductMeta }) {
 
       {/* Right: Preview */}
       <aside style={{
-        width: '260px',
-        borderLeft: '1px solid var(--border-subtle)',
+        width: '328px',
+        borderLeft: '1px solid var(--border)',
         overflowY: 'auto',
-        padding: '12px',
+        padding: '12px 16px',
         flexShrink: 0,
-        background: 'var(--surface-1)',
+        background: 'var(--surface-2)',
       }}>
         <ModulePreview data={lastCompletedData} />
       </aside>
