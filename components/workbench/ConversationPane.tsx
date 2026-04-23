@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
+import { usePostHog } from 'posthog-js/react'
 import { DimensionMeta, Message, PendingData, Source } from '@/lib/types'
 
 interface Props {
@@ -23,6 +24,7 @@ export function ConversationPane({
   onPendingChange,
   onDimensionComplete,
 }: Props) {
+  const posthog = usePostHog()
   const [input, setInput] = useState('')
   const [streaming, setStreaming] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -43,6 +45,20 @@ export function ConversationPane({
 
     const userMessage: Message = { role: 'user', content: input.trim() }
     const nextMessages = [...messages, userMessage]
+
+    // dimension_started: first message in this dimension
+    if (messages.length === 0) {
+      posthog.capture('dimension_started', {
+        dimension_id: activeDimension.id,
+        dimension_name: activeDimension.label,
+      })
+    }
+    // dimension_message_sent: every message
+    posthog.capture('dimension_message_sent', {
+      dimension_id: activeDimension.id,
+      message_round: messages.filter(m => m.role === 'user').length + 1,
+    })
+
     onMessagesChange(nextMessages)
     setInput('')
     setStreaming(true)

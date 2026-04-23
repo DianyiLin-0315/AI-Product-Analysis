@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePostHog } from 'posthog-js/react'
 import { ProductMeta, DimensionData, Message, PendingData, Source } from '@/lib/types'
 import { DimensionList } from '@/components/workbench/DimensionList'
@@ -43,6 +43,31 @@ export function WorkbenchClient({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // dimension_switched + dimension_time_spent: track when active dimension changes
+  const prevDimensionRef = useRef<string>(activeDimensionId)
+  const enteredAtRef = useRef<number>(Date.now())
+
+  useEffect(() => {
+    const prev = prevDimensionRef.current
+    const enteredAt = enteredAtRef.current
+    if (prev && prev !== activeDimensionId) {
+      const seconds = Math.round((Date.now() - enteredAt) / 1000)
+      posthog.capture('dimension_time_spent', {
+        product_slug: meta.slug,
+        dimension_id: prev,
+        seconds,
+      })
+      posthog.capture('dimension_switched', {
+        product_slug: meta.slug,
+        from_dimension: prev,
+        to_dimension: activeDimensionId,
+      })
+    }
+    prevDimensionRef.current = activeDimensionId
+    enteredAtRef.current = Date.now()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeDimensionId])
+
   const activeDimension =
     meta.dimensions.find(d => d.id === activeDimensionId) ?? meta.dimensions[0]
 
@@ -82,13 +107,25 @@ export function WorkbenchClient({
       body: JSON.stringify({ slug: meta.slug, dimensionId: activeDimensionId, data }),
     })
 
-    setMeta(prev => ({
-      ...prev,
-      dimensions: prev.dimensions.map(d =>
-        d.id === activeDimensionId ? { ...d, status: 'complete' } : d
-      ),
-    }))
+    const updatedDimensions = meta.dimensions.map(d =>
+      d.id === activeDimensionId ? { ...d, status: 'complete' as const } : d
+    )
 
+    posthog.capture('dimension_completed', {
+      product_slug: meta.slug,
+      dimension_id: activeDimensionId,
+      total_rounds: (messagesMap[activeDimensionId] ?? []).filter(m => m.role === 'user').length,
+    })
+
+    if (updatedDimensions.every(d => d.status === 'complete')) {
+      posthog.capture('all_dimensions_completed', {
+        product_slug: meta.slug,
+        product_name: meta.name,
+        total_dimensions: updatedDimensions.length,
+      })
+    }
+
+    setMeta(prev => ({ ...prev, dimensions: updatedDimensions }))
     setPreviewMap(prev => ({ ...prev, [activeDimensionId]: data }))
   }
 
