@@ -1,0 +1,35 @@
+{
+  "dimension_id": "user-needs",
+  "dimension_label": "需求洞察",
+  "status": "complete",
+  "conversation_summary": "Notebook LM 跨用户群体的共性需求集中在信息消化、精准检索、多文档分析、内容生成、知识复用和低门槛使用六大方向",
+  "structured_data": {
+    "needs": [
+      {
+        "name": "快速消化大量信息",
+        "priority": 10
+      },
+      {
+        "name": "精准检索与定位",
+        "priority": 9
+      },
+      {
+        "name": "多文档关联分析",
+        "priority": 8
+      },
+      {
+        "name": "内容生成与输出",
+        "priority": 8
+      },
+      {
+        "name": "知识沉淀与复用",
+        "priority": 7
+      },
+      {
+        "name": "低门槛上手使用",
+        "priority": 6
+      }
+    ]
+  },
+  "last_updated": "2026-04-23T01:16:45.489Z"
+}

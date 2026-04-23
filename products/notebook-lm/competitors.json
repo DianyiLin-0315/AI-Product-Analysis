@@ -1,0 +1,67 @@
+{
+  "dimension_id": "competitors",
+  "dimension_label": "竞品分析",
+  "status": "complete",
+  "conversation_summary": "Notebook LM 在 AI 文档理解能力上领先，但在协作、生态和知识管理系统性上弱于 Notion、飞书、Obsidian",
+  "structured_data": {
+    "competitors": [
+      {
+        "name": "Notebook LM",
+        "score": 7
+      },
+      {
+        "name": "Notion",
+        "score": 9
+      },
+      {
+        "name": "飞书",
+        "score": 8
+      },
+      {
+        "name": "Obsidian",
+        "score": 7
+      }
+    ],
+    "dimension_scores": {
+      "AI能力": {
+        "Notebook LM": 10,
+        "Notion": 7,
+        "飞书": 6,
+        "Obsidian": 4
+      },
+      "知识管理": {
+        "Notebook LM": 5,
+        "Notion": 9,
+        "飞书": 7,
+        "Obsidian": 10
+      },
+      "协作能力": {
+        "Notebook LM": 2,
+        "Notion": 9,
+        "飞书": 10,
+        "Obsidian": 3
+      },
+      "使用门槛": {
+        "Notebook LM": 8,
+        "Notion": 6,
+        "飞书": 5,
+        "Obsidian": 4
+      },
+      "生态整合": {
+        "Notebook LM": 5,
+        "Notion": 9,
+        "飞书": 8,
+        "Obsidian": 6
+      }
+    },
+    "key_insights": [
+      "Notebook LM 是四者中 AI 能力最强的，尤其擅长基于私有文档的深度问答",
+      "Obsidian 在知识管理系统性上最强，双链笔记是 Notebook LM 明显缺失的能力",
+      "飞书在企业协作场景碾压 Notebook LM，两者几乎不在同一赛道",
+      "Notebook LM 使用门槛最低，适合快速上手的研究/学习场景",
+      "Notion 是综合竞争力最强的对手，正在快速补齐 AI 能力"
+    ],
+    "positioning_summary": "Notebook LM 定位为「AI 驱动的私人研究助手」，而非全能知识管理工具，差异化明确但场景较窄"
+  },
+  "last_updated": "2026-04-23T01:18:20.879Z"
+}
