@@ -2,8 +2,10 @@
 import Link from 'next/link'
 import { ProductMeta } from '@/lib/types'
 import { useState } from 'react'
+import { usePostHog } from 'posthog-js/react'
 
 export function ProductCard({ product }: { product: ProductMeta }) {
+  const posthog = usePostHog()
   const completed = product.dimensions.filter(d => d.status === 'complete').length
   const total = product.dimensions.length
   const pct = total > 0 ? (completed / total) * 100 : 0
@@ -14,6 +16,10 @@ export function ProductCard({ product }: { product: ProductMeta }) {
       href={`/products/${product.slug}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={() => posthog.capture('product_card_clicked', {
+        product_slug: product.slug,
+        product_name: product.name,
+      })}
       style={{
         display: 'flex',
         flexDirection: 'column',

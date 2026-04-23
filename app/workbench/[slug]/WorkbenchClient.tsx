@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { usePostHog } from 'posthog-js/react'
 import { ProductMeta, DimensionData, Message, PendingData, Source } from '@/lib/types'
 import { DimensionList } from '@/components/workbench/DimensionList'
 import { ConversationPane } from '@/components/workbench/ConversationPane'
@@ -15,6 +16,7 @@ export function WorkbenchClient({
   initialPreviewMap?: Record<string, DimensionData>
   initialSources?: Source[]
 }) {
+  const posthog = usePostHog()
   const [meta, setMeta] = useState(initialMeta)
   const [activeDimensionId, setActiveDimensionId] = useState(
     meta.dimensions[0]?.id ?? ''
@@ -30,6 +32,16 @@ export function WorkbenchClient({
 
   // Per-dimension preview data — seeded from server on mount
   const [previewMap, setPreviewMap] = useState<Record<string, DimensionData>>(initialPreviewMap)
+
+  // workbench_entered: fire once on mount
+  useEffect(() => {
+    const isNew = meta.dimensions.every(d => d.status === 'pending')
+    posthog.capture('workbench_entered', {
+      product_slug: meta.slug,
+      is_new: isNew,
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const activeDimension =
     meta.dimensions.find(d => d.id === activeDimensionId) ?? meta.dimensions[0]

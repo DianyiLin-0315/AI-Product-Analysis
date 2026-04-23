@@ -1,5 +1,6 @@
 import { readProductMeta, readDimensionData } from '@/lib/products'
 import { CompareView } from '@/components/public/CompareView'
+import { CompareTracker } from '@/components/public/CompareTracker'
 import { DimensionData, ProductMeta } from '@/lib/types'
 
 export default async function ComparePage({
@@ -64,7 +65,10 @@ export default async function ComparePage({
       </div>
 
       {valid.length >= 2 ? (
-        <CompareView entries={valid} />
+        <>
+          <CompareTracker productCount={valid.length} />
+          <CompareView entries={valid} />
+        </>
       ) : (
         <p style={{ fontSize: '12px', color: '#ADADBC' }}>
           部分产品不存在或无法加载，请返回重新选择。
