@@ -1,0 +1,39 @@
+{
+  "dimension_id": "pain-points",
+  "dimension_label": "场景痛点",
+  "status": "complete",
+  "conversation_summary": "Notebook LM 的核心场景痛点集中在资料来源限制、内容幻觉、多语言支持不足等方面，制约了其在专业和团队场景中的深度使用",
+  "structured_data": {
+    "pain_points": [
+      {
+        "name": "资料来源格式限制严格",
+        "severity": 9
+      },
+      {
+        "name": "输出内容存在幻觉问题",
+        "severity": 9
+      },
+      {
+        "name": "多语言支持不足",
+        "severity": 7
+      },
+      {
+        "name": "单次处理文档量有限",
+        "severity": 7
+      },
+      {
+        "name": "协作功能薄弱",
+        "severity": 6
+      },
+      {
+        "name": "无法联网获取实时信息",
+        "severity": 6
+      },
+      {
+        "name": "Audio Overview 可控性差",
+        "severity": 4
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T19:33:17.832Z"
+}

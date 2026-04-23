@@ -1,0 +1,51 @@
+{
+  "dimension_id": "user-needs",
+  "dimension_label": "需求洞察",
+  "status": "complete",
+  "conversation_summary": "Notion用户核心需求集中在降低上手门槛、强化协作与知识管理，个人与团队用户诉求并存，模板与引导体验是关键破局点",
+  "structured_data": {
+    "needs": [
+      {
+        "name": "降低上手门槛（新手引导/模板）",
+        "priority": 10
+      },
+      {
+        "name": "灵活的内容组织（Block体系）",
+        "priority": 9
+      },
+      {
+        "name": "团队协作与权限管理",
+        "priority": 8
+      },
+      {
+        "name": "知识库/Wiki搭建",
+        "priority": 8
+      },
+      {
+        "name": "任务与项目管理",
+        "priority": 7
+      },
+      {
+        "name": "快速导入与迁移",
+        "priority": 7
+      },
+      {
+        "name": "个人笔记与私密空间",
+        "priority": 6
+      },
+      {
+        "name": "数据库与视图多样化",
+        "priority": 6
+      },
+      {
+        "name": "性能与加载速度",
+        "priority": 5
+      },
+      {
+        "name": "移动端体验优化",
+        "priority": 4
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T21:18:42.846Z"
+}

@@ -1,0 +1,65 @@
+{
+  "dimension_id": "pricing",
+  "dimension_label": "定价策略",
+  "status": "complete",
+  "conversation_summary": "Notion 采用免费增值（Freemium）模式，提供4个梯度套餐，覆盖个人到企业用户，并以加购形式推广 AI 功能变现。",
+  "structured_data": {
+    "tiers": [
+      {
+        "name": "Free",
+        "price": "$0/月",
+        "features": [
+          "无限页面与区块（个人使用）",
+          "与最多10名访客协作",
+          "7天页面历史记录",
+          "基础模板库",
+          "文件上传限制 5MB"
+        ]
+      },
+      {
+        "name": "Plus",
+        "price": "$10/月",
+        "features": [
+          "无限文件上传",
+          "无限访客协作",
+          "30天页面历史记录",
+          "完整模板库",
+          "自定义域名（Notion Sites）"
+        ]
+      },
+      {
+        "name": "Business",
+        "price": "$15/月",
+        "features": [
+          "90天页面历史记录",
+          "SAML SSO 单点登录",
+          "私有团队空间（Teamspace）",
+          "批量 PDF 导出",
+          "高级分析与权限管理"
+        ]
+      },
+      {
+        "name": "Enterprise",
+        "price": "定制报价",
+        "features": [
+          "无限页面历史记录",
+          "企业级安全与合规",
+          "专属客户成功经理",
+          "用户配置与 SCIM",
+          "高级审计日志"
+        ]
+      },
+      {
+        "name": "Notion AI（加购）",
+        "price": "$10/月",
+        "features": [
+          "适用于所有套餐",
+          "AI 写作与摘要",
+          "AI 问答与数据提取",
+          "跨页面智能搜索"
+        ]
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T20:15:43.796Z"
+}

@@ -1,0 +1,39 @@
+{
+  "dimension_id": "pain-points",
+  "dimension_label": "场景痛点",
+  "status": "complete",
+  "conversation_summary": "Notion 核心痛点集中在上手门槛高、性能与离线体验差、团队协作管理复杂、移动端体验不足及价格门槛偏高等方面，个人与企业用户均受影响",
+  "structured_data": {
+    "pain_points": [
+      {
+        "name": "上手门槛高（Block概念抽象，空白页焦虑）",
+        "severity": 9
+      },
+      {
+        "name": "页面加载性能差（复杂数据库尤为明显）",
+        "severity": 8
+      },
+      {
+        "name": "离线能力弱（网络依赖强）",
+        "severity": 8
+      },
+      {
+        "name": "团队权限管理复杂（层级配置不友好）",
+        "severity": 7
+      },
+      {
+        "name": "移动端体验差（以桌面为主设计）",
+        "severity": 7
+      },
+      {
+        "name": "搜索能力弱（跨页面检索效率低）",
+        "severity": 6
+      },
+      {
+        "name": "价格门槛高（团队版对中小团队不友好）",
+        "severity": 6
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T21:14:35.243Z"
+}

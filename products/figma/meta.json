@@ -1,34 +1,34 @@
 {
-  "slug": "notebook-lm",
-  "name": "Notebook LM",
-  "category": "工具产品",
+  "slug": "figma",
+  "name": "Figma",
+  "category": "设计工具",
   "logo": "📦",
   "key_stats": {},
-  "created_at": "2026-04-22T01:47:32.927Z",
+  "created_at": "2026-04-22T18:44:15.523Z",
   "dimensions": [
     {
       "id": "user-segment",
       "label": "用户群体",
       "isExtended": false,
-      "status": "complete"
+      "status": "pending"
     },
     {
       "id": "pricing",
       "label": "定价策略",
       "isExtended": false,
-      "status": "complete"
+      "status": "pending"
     },
     {
       "id": "features",
       "label": "功能特性",
       "isExtended": false,
-      "status": "complete"
+      "status": "pending"
     },
     {
       "id": "pain-points",
       "label": "场景痛点",
       "isExtended": false,
-      "status": "complete"
+      "status": "pending"
     },
     {
       "id": "user-needs",

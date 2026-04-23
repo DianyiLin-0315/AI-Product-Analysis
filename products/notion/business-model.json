@@ -1,0 +1,75 @@
+{
+  "dimension_id": "business-model",
+  "dimension_label": "商业模式",
+  "status": "complete",
+  "conversation_summary": "Notion采用Freemium免费增值模式，通过个人免费版获取用户、团队版和企业版实现商业变现，付费转化率约13%",
+  "structured_data": {
+    "business_model_type": "Freemium + SaaS订阅制",
+    "revenue_streams": [
+      {
+        "name": "个人Plus版",
+        "type": "订阅收入",
+        "price": "约$8/月（年付）",
+        "target": "个人高级用户"
+      },
+      {
+        "name": "Business版",
+        "type": "订阅收入",
+        "price": "约$15/人/月（年付）",
+        "target": "中小团队"
+      },
+      {
+        "name": "Enterprise版",
+        "type": "订阅收入",
+        "price": "定制报价",
+        "target": "大型企业客户"
+      }
+    ],
+    "pricing_strategy": {
+      "free_tier": "提供免费个人版，功能受限（如协作人数、上传限制等）",
+      "upsell_path": "个人免费 → Plus → Business → Enterprise",
+      "key_limit": "免费版限制团队协作和存储，驱动付费升级"
+    },
+    "user_metrics": {
+      "total_users": "3000万（2022年）",
+      "paid_users": "400万（2022年）",
+      "conversion_rate": "约13.3%"
+    },
+    "customer_segments": [
+      {
+        "segment": "个人用户",
+        "description": "学生、独立工作者、创作者",
+        "monetization": "Plus订阅"
+      },
+      {
+        "segment": "中小团队",
+        "description": "初创公司、互联网团队",
+        "monetization": "Business订阅，按人头计费"
+      },
+      {
+        "segment": "大型企业",
+        "description": "需要SSO、权限管理、合规的企业",
+        "monetization": "Enterprise定制合同"
+      }
+    ],
+    "growth_strategy": {
+      "acquisition": "PLG（产品驱动增长），免费版口碑传播，模板生态吸引新用户",
+      "retention": "All-in-one工具高度绑定用户工作流，切换成本高",
+      "expansion": "个人用户带动团队付费，Bottom-up企业销售策略"
+    },
+    "cost_structure": {
+      "main_costs": [
+        "研发人员成本",
+        "云服务器/存储成本",
+        "市场推广"
+      ],
+      "note": "SaaS模式边际成本低，规模化后利润率提升空间大"
+    },
+    "competitive_moat": [
+      "All-in-one整合降低用户工具切换成本",
+      "丰富的模板生态和社区",
+      "高度灵活的Block架构带来强产品粘性"
+    ]
+  },
+  "last_updated": "2026-04-22T21:26:55.400Z"
+}

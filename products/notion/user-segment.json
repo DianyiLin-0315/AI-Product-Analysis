@@ -1,0 +1,27 @@
+{
+  "dimension_id": "user-segment",
+  "dimension_label": "用户群体",
+  "status": "complete",
+  "conversation_summary": "Notion用户以个人专业人士为主体，团队用户为核心付费群体，企业用户占少数但贡献高价值；整体付费转化率约13%（400万/3000万）",
+  "structured_data": {
+    "segments": [
+      {
+        "name": "个人专业人士（设计师/产品经理/运营等）",
+        "percentage": 55
+      },
+      {
+        "name": "团队用户",
+        "percentage": 30
+      },
+      {
+        "name": "企业用户",
+        "percentage": 8
+      },
+      {
+        "name": "学生/其他",
+        "percentage": 7
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T20:13:49.564Z"
+}

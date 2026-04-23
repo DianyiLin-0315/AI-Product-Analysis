@@ -1,0 +1,39 @@
+{
+  "dimension_id": "features",
+  "dimension_label": "功能特性",
+  "status": "complete",
+  "conversation_summary": "Notebook LM 功能特性均衡，核心优势在于文档问答、引用溯源和音频概览等差异化能力，协作功能相对较弱。",
+  "structured_data": {
+    "features": [
+      {
+        "name": "文档理解与问答",
+        "score": 9
+      },
+      {
+        "name": "多源整合能力",
+        "score": 8
+      },
+      {
+        "name": "内容摘要生成",
+        "score": 8
+      },
+      {
+        "name": "音频概览",
+        "score": 9
+      },
+      {
+        "name": "引用溯源",
+        "score": 9
+      },
+      {
+        "name": "笔记与写作辅助",
+        "score": 7
+      },
+      {
+        "name": "协作共享",
+        "score": 5
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T19:32:18.197Z"
+}

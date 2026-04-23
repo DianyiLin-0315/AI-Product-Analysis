@@ -2,45 +2,77 @@
   "dimension_id": "user-segment",
   "dimension_label": "用户群体",
   "status": "complete",
-  "conversation_summary": "Notebook LM 核心用户为学生和职场人士，前者聚焦论文快速理解与对比，偏好免费版；后者聚焦文档整理与汇报生成，付费意愿较强",
+  "conversation_summary": "Notebook LM 当前用户以学生、研究人员和知识工作者为核心，用户规模已超300万，主要需求集中在长文档问答和内容快速消化场景。",
   "structured_data": {
-    "primary_user_groups": [
+    "user_segments": [
       {
-        "group": "学生",
-        "priority": "核心用户",
-        "main_scenarios": [
-          "快速阅读理解论文",
-          "整理学习笔记",
-          "多论文内容对比分析"
-        ],
-        "core_pain_points": [
-          "阅读时间成本高",
-          "论文信息量大难以提炼",
-          "多文献对比耗费精力"
-        ],
-        "payment_willingness": "低，倾向免费版"
+        "segment": "学生",
+        "description": "本科生、研究生为主，用于处理学术论文、教材和课程资料",
+        "estimated_proportion": "35%",
+        "core_use_case": "文献阅读、考试备考、论文研究"
       },
       {
-        "group": "职场人士",
-        "priority": "核心用户",
-        "main_scenarios": [
-          "处理大量文档内容",
-          "快速生成可视化报告",
-          "整理汇报材料"
-        ],
-        "core_pain_points": [
-          "文档内容繁杂难以汇总",
-          "生成汇报报告耗时",
-          "信息提炼效率低"
-        ],
-        "payment_willingness": "高，愿意为效率付费"
+        "segment": "研究人员 / 学者",
+        "description": "高校或研究机构人员，用于快速消化大量学术文献",
+        "estimated_proportion": "25%",
+        "core_use_case": "文献综述、跨文档知识整合"
+      },
+      {
+        "segment": "知识工作者",
+        "description": "记者、律师、咨询师、产品经理等，处理专业文档和报告",
+        "estimated_proportion": "25%",
+        "core_use_case": "报告分析、合同阅读、行业研究"
+      },
+      {
+        "segment": "企业用户",
+        "description": "通过 Notebook LM Plus 使用，团队协作处理内部文档",
+        "estimated_proportion": "15%",
+        "core_use_case": "内部知识库问答、会议纪要整理"
       }
     ],
-    "secondary_user_groups": [],
-    "user_insights": {
-      "monetization_focus": "职场人士是主要付费群体，商业价值更高",
-      "growth_focus": "学生群体基数大，是重要的免费用户增长来源"
-    }
+    "user_scale": {
+      "total_users": "300万+",
+      "data_source": "Google 官方披露（2024年10月）",
+      "growth_trend": "快速增长，Audio Overview 功能发布后出现显著用户跃升",
+      "geographic_distribution": "以英语市场为主（美国、英国、澳大利亚），已扩展至全球多语言市场"
+    },
+    "core_needs": [
+      {
+        "need": "长文档问答",
+        "description": "上传 PDF、论文、书籍后进行精准问答，获取基于原文的答案",
+        "priority": "高"
+      },
+      {
+        "need": "内容快速消化",
+        "description": "使用 Audio Overview 功能将文档转化为播客形式，通勤/碎片时间收听",
+        "priority": "高"
+      },
+      {
+        "need": "跨文档知识整合",
+        "description": "同时上传多个来源文档，进行跨文档对比和总结",
+        "priority": "中"
+      },
+      {
+        "need": "笔记与引用管理",
+        "description": "生成带原文引用的笔记，确保内容可溯源",
+        "priority": "中"
+      }
+    ],
+    "user_behavior_patterns": {
+      "primary_input": "PDF文档、网页链接、Google Docs",
+      "avg_docs_per_session": "3-5个文档",
+      "popular_features": [
+        "Audio Overview（播客生成）",
+        "问答对话",
+        "笔记自动生成"
+      ],
+      "usage_frequency": "以项目驱动为主，非日常高频使用"
+    },
+    "user_pain_points": [
+      "不支持实时网络信息检索，只能基于上传文档",
+      "文档数量和大小存在上限限制",
+      "非英语内容处理效果相对较弱"
+    ]
   },
-  "last_updated": "2026-04-22T01:57:54.719Z"
+  "last_updated": "2026-04-22T17:45:06.980Z"
 }

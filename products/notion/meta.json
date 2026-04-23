@@ -1,10 +1,10 @@
 {
-  "slug": "notebook-lm",
-  "name": "Notebook LM",
-  "category": "工具产品",
+  "slug": "notion",
+  "name": "Notion",
+  "category": "笔记产品",
   "logo": "📦",
   "key_stats": {},
-  "created_at": "2026-04-22T01:47:32.927Z",
+  "created_at": "2026-04-22T18:46:26.967Z",
   "dimensions": [
     {
       "id": "user-segment",
@@ -34,19 +34,19 @@
       "id": "user-needs",
       "label": "需求洞察",
       "isExtended": false,
-      "status": "pending"
+      "status": "complete"
     },
     {
       "id": "competitors",
       "label": "竞品分析",
       "isExtended": false,
-      "status": "pending"
+      "status": "complete"
     },
     {
       "id": "business-model",
       "label": "商业模式",
       "isExtended": false,
-      "status": "pending"
+      "status": "complete"
     }
   ]
 }

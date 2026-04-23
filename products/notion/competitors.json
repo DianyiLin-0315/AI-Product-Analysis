@@ -1,0 +1,117 @@
+{
+  "dimension_id": "competitors",
+  "dimension_label": "竞品分析",
+  "status": "complete",
+  "conversation_summary": "Notion在团队协作与个人知识库领域面临飞书、Obsidian、Coda三大核心竞品的差异化竞争，各有优势赛道，Notion综合竞争力居中偏上。",
+  "structured_data": {
+    "competitors": [
+      {
+        "name": "Notion",
+        "score": 8
+      },
+      {
+        "name": "飞书",
+        "score": 8
+      },
+      {
+        "name": "Obsidian",
+        "score": 6
+      },
+      {
+        "name": "Coda",
+        "score": 7
+      }
+    ],
+    "comparison_dimensions": [
+      {
+        "dimension": "功能完整性",
+        "Notion": 9,
+        "飞书": 8,
+        "Obsidian": 5,
+        "Coda": 8
+      },
+      {
+        "dimension": "协作能力",
+        "Notion": 7,
+        "飞书": 10,
+        "Obsidian": 2,
+        "Coda": 7
+      },
+      {
+        "dimension": "用户体验/上手难度",
+        "Notion": 6,
+        "飞书": 7,
+        "Obsidian": 4,
+        "Coda": 6
+      },
+      {
+        "dimension": "内容组织方式",
+        "Notion": 9,
+        "飞书": 7,
+        "Obsidian": 8,
+        "Coda": 8
+      },
+      {
+        "dimension": "离线与数据隐私",
+        "Notion": 3,
+        "飞书": 3,
+        "Obsidian": 10,
+        "Coda": 3
+      },
+      {
+        "dimension": "生态与集成",
+        "Notion": 8,
+        "飞书": 6,
+        "Obsidian": 7,
+        "Coda": 6
+      },
+      {
+        "dimension": "价格策略",
+        "Notion": 6,
+        "飞书": 9,
+        "Obsidian": 8,
+        "Coda": 5
+      },
+      {
+        "dimension": "目标用户契合度",
+        "Notion": 8,
+        "飞书": 7,
+        "Obsidian": 5,
+        "Coda": 7
+      }
+    ],
+    "competitive_positioning": [
+      {
+        "product": "Notion",
+        "positioning": "团队协作 + 个人知识库全能型",
+        "core_advantage": "块编辑灵活性强、模板生态丰富、功能覆盖面广",
+        "core_weakness": "上手门槛偏高、离线能力弱、国内访问不稳定"
+      },
+      {
+        "product": "飞书",
+        "positioning": "企业级团队协作平台",
+        "core_advantage": "协作能力最强、国内生态完善、免费策略激进",
+        "core_weakness": "个人知识库深度不足、内容组织灵活性较弱"
+      },
+      {
+        "product": "Obsidian",
+        "positioning": "个人本地知识库/第二大脑",
+        "core_advantage": "双向链接、本地存储、数据完全自有、插件生态强",
+        "core_weakness": "几乎无协作能力、上手难度高、界面不够友好"
+      },
+      {
+        "product": "Coda",
+        "positioning": "文档+数据库融合的团队工作台",
+        "core_advantage": "表格与文档深度融合、自动化能力强、适合开发者和运营团队",
+        "core_weakness": "价格偏高、用户规模较小、品牌认知度低"
+      }
+    ],
+    "key_insights": [
+      "飞书是Notion在企业市场最强的直接威胁，尤其在中国市场凭借免费策略和本土化优势形成降维打击",
+      "Obsidian与Notion用户重叠度低，更多是互补关系，重度个人用户可能两者并用",
+      "Coda是功能上最接近Notion的竞品，但市场声量和用户规模差距明显",
+      "Notion的核心护城河在于'All-in-One'的产品理念和庞大的模板社区生态"
+    ]
+  },
+  "last_updated": "2026-04-22T21:25:07.594Z"
+}

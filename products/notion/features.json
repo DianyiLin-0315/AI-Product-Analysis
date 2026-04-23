@@ -1,0 +1,43 @@
+{
+  "dimension_id": "features",
+  "dimension_label": "功能特性",
+  "status": "complete",
+  "conversation_summary": "Notion功能特性全面均衡，核心编辑与数据库能力突出，AI功能尚在成长期，集成扩展性相对较弱",
+  "structured_data": {
+    "features": [
+      {
+        "name": "核心编辑能力",
+        "score": 9
+      },
+      {
+        "name": "数据库与项目管理",
+        "score": 8
+      },
+      {
+        "name": "协作与权限管理",
+        "score": 7
+      },
+      {
+        "name": "模板系统",
+        "score": 9
+      },
+      {
+        "name": "AI功能",
+        "score": 6
+      },
+      {
+        "name": "集成与扩展性",
+        "score": 6
+      },
+      {
+        "name": "跨平台支持",
+        "score": 7
+      },
+      {
+        "name": "知识库/Wiki能力",
+        "score": 9
+      }
+    ]
+  },
+  "last_updated": "2026-04-22T21:13:16.754Z"
+}
