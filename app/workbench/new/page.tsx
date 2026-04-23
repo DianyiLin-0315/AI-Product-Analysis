@@ -11,10 +11,11 @@ export default function NewProductPage() {
     e.preventDefault()
     setLoading(true)
 
-    const slug = form.name
+    const baseSlug = form.name
       .toLowerCase()
       .replace(/\s+/g, '-')
-      .replace(/[^\w-]/g, '')
+      .replace(/[^a-z0-9-]/g, '')
+    const slug = baseSlug || `product-${Date.now()}`
 
     await fetch('/api/dimension', {
       method: 'PUT',
