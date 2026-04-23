@@ -1,12 +1,10 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-const isWorkbench = createRouteMatcher(['/workbench(.*)'])
-
-export default clerkMiddleware(async (auth, req) => {
-  if (isWorkbench(req)) {
-    await auth.protect()
-  }
-})
+// Temporary: bypass Clerk to isolate 500 error
+export default function proxy(req: NextRequest) {
+  return NextResponse.next()
+}
 
 export const config = {
   matcher: [
