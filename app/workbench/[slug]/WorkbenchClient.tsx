@@ -88,6 +88,14 @@ export function WorkbenchClient({
     setActiveDimensionId(id)
   }
 
+  function handleOpenSources() {
+    posthog.capture('sources_panel_opened', {
+      product_slug: meta.slug,
+      dimension_id: activeDimensionId,
+    })
+    setShowSources(true)
+  }
+
   async function handleDimensionComplete(
     summary: string,
     structuredData: Record<string, unknown>
@@ -154,7 +162,10 @@ export function WorkbenchClient({
           productCategory={meta.category}
           sourcesCount={sources.length}
           sourcesActive={showSources}
-          onSelectSources={() => setShowSources(true)}
+          onSelectSources={handleOpenSources}
+          onAddDimension={() => {
+            posthog.capture('dimension_added', { product_slug: meta.slug })
+          }}
         />
       </aside>
 

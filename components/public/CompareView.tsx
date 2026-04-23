@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { usePostHog } from 'posthog-js/react'
 import { ProductMeta, DimensionData } from '@/lib/types'
 import { ComparisonCard } from './ComparisonCard'
 
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export function CompareView({ entries }: Props) {
+  const posthog = usePostHog()
+
   // Collect all unique dimension ids across all products
   const allDimIds = Array.from(
     new Set(entries.flatMap(e => e.dimensions.map(d => d.dimension_id)))
@@ -27,6 +30,9 @@ export function CompareView({ entries }: Props) {
     setSelected(prev => {
       const next = new Set(prev)
       next.has(id) ? next.delete(id) : next.add(id)
+      posthog.capture('dimension_filter_applied', {
+        selected_dimensions: [...next],
+      })
       return next
     })
   }

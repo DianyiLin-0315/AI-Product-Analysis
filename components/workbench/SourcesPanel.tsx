@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
+import { usePostHog } from 'posthog-js/react'
 import { Source } from '@/lib/types'
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function SourcesPanel({ slug, sources, onSourcesChange }: Props) {
+  const posthog = usePostHog()
   const [urlInput, setUrlInput] = useState('')
   const [loadingUrl, setLoadingUrl] = useState(false)
   const [loadingFile, setLoadingFile] = useState(false)
@@ -30,6 +32,7 @@ export function SourcesPanel({ slug, sources, onSourcesChange }: Props) {
       const source = await res.json() as Source
       onSourcesChange([...sources, source])
       setUrlInput('')
+      posthog.capture('source_added', { slug, source_type: 'url' })
     } catch {
       setError('网络错误，请重试')
     } finally {
@@ -50,6 +53,7 @@ export function SourcesPanel({ slug, sources, onSourcesChange }: Props) {
       if (!res.ok) { setError('文件上传失败'); return }
       const source = await res.json() as Source
       onSourcesChange([...sources, source])
+      posthog.capture('source_added', { slug, source_type: 'file' })
     } catch {
       setError('网络错误，请重试')
     } finally {
